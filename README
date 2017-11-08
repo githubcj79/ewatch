@@ -59,3 +59,60 @@ python manage.py startapp early
 (ewatch) ~/Projects/ewatch/ewatch/early$ touch urls.py
 
 http://localhost:8001/early/ --> Hello, world. You're at the early index.
+
+git commit -m "Estado inicial --> Hello, world. You're at the early index."
+
+-------------------------------------------------------------------
+
+(ewatch) ~/Projects/ewatch/ewatch$ python manage.py migrate
+
+(ewatch) ~/Projects/ewatch/ewatch$ python manage.py makemigrations early
+Migrations for 'early':
+  early/migrations/0001_initial.py
+    - Create model Country
+    - Create model View
+
+python manage.py migrate
+
+'''
+Las migraciones son muy potentes y le permiten modificar sus modelos con el tiempo, a medida que desarrolla su proyecto, sin necesidad de eliminar su base de datos o las tablas y hacer otras nuevas. Este se especializa en la actualización de su base de datos en vivo, sin perder datos. Vamos a hablar de ellas en mayor profundidad más tarde en el tutorial, pero por ahora, recuerde la guía de tres pasos para hacer cambios de modelo:
+
+    Cambie sus modelos (en models.py).
+    Ejecute el comando python manage.py makemigrations para crear migraciones para esos cambios
+    Ejecute el comando python manage.py migrate para aplicar esos cambios a la base de datos.
+'''
+
+(ewatch) ~/Projects/ewatch/ewatch$ python manage.py shell
+>>> from early.models import Country, View
+>>> from django.utils import timezone
+>>> c = Country(country_text="CHILE")
+c.save()
+>>> Country.objects.all()
+
+
+(ewatch) ~/Projects/ewatch/ewatch$ python manage.py shell
+Python 2.7.12 (default, Nov 19 2016, 06:48:10) 
+[GCC 5.4.0 20160609] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from early.models import Country, View
+>>> from django.utils import timezone
+>>> Country.objects.all()
+<QuerySet [<Country: CHILE>]>
+>>> Country.objects.filter(id=1)
+<QuerySet [<Country: CHILE>]>
+>>> Country.objects.filter(country_text__startswith='CH')
+<QuerySet [<Country: CHILE>]>
+>>> c = Country.objects.get(pk=1)
+>>> c.view_set.all()
+<QuerySet []>
+>>> c.view_set.create(view_text='CL_POS_REGIONAL', pub_date=timezone.now())
+<View: CL_POS_REGIONAL>
+
+-------------------------------------------------------------------
+
+(ewatch) ~/Projects/ewatch/ewatch$ python manage.py createsuperuser
+Username (leave blank to use 'carlos'): 
+Email address: carlosjmnz79@gmail.com
+Password: --> ewatch79
+
