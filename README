@@ -1,0 +1,61 @@
+Proyecto:	ewatch
+			(~/Projects/ewatch)
+
+-------------------------------------------------------------------
+
+Para efectos de este proyecto se creará un ambiente virtual
+del mismo nombre.
+	
+$ virtualenv --python=/usr/bin/python2.7 ~/.myvirtualenv/ewatch			
+
+~/Projects/ewatch$ workon
+dproject
+ewatch
+livestatus3
+sanidad
+
+-------------------------------------------------------------------
+
+Se inicializa git
+
+(ewatch) ~/Projects/ewatch$ git init
+
+(ewatch) ~/Projects/ewatch$ touch .gitignore
+
+-------------------------------------------------------------------
+
+Instalación de Django 1.11 LTS
+
+(ewatch) ~/Projects/ewatch$ python -m django --version
+1.11
+-------------------------------------------------------------------
+Django:
+
+https://docs.djangoproject.com/es/1.11/intro/tutorial01/
+
+(ewatch) ~/Projects/ewatch$ django-admin startproject ewatch
+
+(ewatch) ~/Projects/ewatch/ewatch$ t
+.
+├── ewatch
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── manage.py
+
+(ewatch) ~/Projects/ewatch/ewatch$ python manage.py runserver 8001
+
+'''
+CommandError: 'ewatch' conflicts with the name of an existing Python module and cannot be used as an app name. Please try another name.
+'''
+
+python manage.py startapp early
+
+--->
+	El proyecto es ewatch
+	La app es early
+
+(ewatch) ~/Projects/ewatch/ewatch/early$ touch urls.py
+
+http://localhost:8001/early/ --> Hello, world. You're at the early index.
