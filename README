@@ -133,10 +133,7 @@ Ejecute el servidor y utilice su nueva aplicación encuesta basada en las vistas
 Para más detalles sobre las vistas genéricas, consulte la documentación de las vistas genéricas.	
 '''
 
---------------------------
+Intento Cambiar vista index para que muestre la lista de paises ...
 
-PROBLEMAS !!!
-
-Vuelvo atrás con:
-
-	git checkout commit_hash
+~/Projects/ewatch/ewatch$ workon ewatch
+(ewatch) ~/Projects/ewatch/ewatch$ python manage.py runserver 8001

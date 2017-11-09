@@ -1,0 +1,9 @@
+<h1>{{ country.country_text }}</h1>
+
+<ul>
+{% for view in country.view_set.all %}
+    <li>{{ view.view_text }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'early:detail' country.id %}">Revisar nuevamente?</a>

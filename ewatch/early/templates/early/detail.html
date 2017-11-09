@@ -1,0 +1,7 @@
+<h1>{{ country.country_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% for view in country.view_set.all %}
+        <li><a href="{% url 'early:results' view.id %}">{{ view.view_text }}</a></li>
+{% endfor %}

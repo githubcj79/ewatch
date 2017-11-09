@@ -1,9 +1,9 @@
 {% if country_list %}
     <ul>
     {% for country in country_list %}
-        <li><a href="{% url 'report:detail' country.id %}">{{ country.country_text }}</a></li>
+        <li><a href="{% url 'early:detail' country.id %}">{{ country.country_text }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No polls are available.</p>
+    <p>No countries are available.</p>
 {% endif %}
