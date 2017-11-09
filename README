@@ -116,3 +116,19 @@ Username (leave blank to use 'carlos'):
 Email address: carlosjmnz79@gmail.com
 Password: --> ewatch79
 
+'''
+Estamos utilizando dos vistas genéricas aquí: ListView y DetailView. Respectivamente, esas dos vistas abstraen los conceptos de «mostrar una lista de objetos» y «mostrar una página de detalles para un tipo específico de objeto.»
+
+    Cada vista genérica tiene que saber cuál es el modelo sobre el que estará actuando. Esto se proporciona utilizando el atributo model.
+    La vista genérica DetailView espera que el valor de la clave primaria capturado desde la URL sea denominado "pk", por lo que hemos cambiado``question_id`` a pk para las vistas genéricas.
+
+Por defecto, la vista genérica DetailView utiliza una plantilla llamada <app name>/<model name>_detail.html. En nuestro caso, utilizaría la plantilla "polls/question_detail.html". El atributo template_name se utiliza para indicarle a Django que utilice un nombre de plantilla específico en vez del nombre de plantilla generado de forma automática. También especificamos el atributo template_name para la vista de lista results, esto garantiza que la vista de resultados y la vista detalle tengan un aspecto diferente cuando sean creadas, a pesar de que las dos son una vista genérica DetailView en segundo plano.
+
+Del mismo modo, la vista genérica ListView utiliza una plantilla predeterminada llamada <app name>/<model name>_list.html; utilizamos el atributo template_name para indicarle a ListView que utilice nuestra plantilla "polls/index.html" existente.
+
+En partes anteriores del tutorial, las plantillas se han dotado de un contexto que contiene las variables contextuales question y latest_question_list. Para DetailView se suministra la variable question de forma automática, ya que estamos utilizando un modelo (Question) de Django, Django puede determinar un nombre adecuado para la variable contextual. Sin embargo, para ListView, la variable contextual generada de forma automática es question_list. Para anular esto, proporcionamos el atributo``context_object_name`` especificando que queremos utilizar en cambio latest_question_list. Como un método alternativo, usted puede modificar sus plantillas para que coincidan con las nuevas variables contextuales predeterminadas, pero es mucho más sencillo solo indicarle a Django que utilice la variable que usted quiere.
+
+Ejecute el servidor y utilice su nueva aplicación encuesta basada en las vistas genéricas.
+
+Para más detalles sobre las vistas genéricas, consulte la documentación de las vistas genéricas.
+'''
