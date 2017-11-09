@@ -130,5 +130,13 @@ En partes anteriores del tutorial, las plantillas se han dotado de un contexto q
 
 Ejecute el servidor y utilice su nueva aplicación encuesta basada en las vistas genéricas.
 
-Para más detalles sobre las vistas genéricas, consulte la documentación de las vistas genéricas.
+Para más detalles sobre las vistas genéricas, consulte la documentación de las vistas genéricas.	
 '''
+
+--------------------------
+
+PROBLEMAS !!!
+
+Vuelvo atrás con:
+
+	git checkout commit_hash
