@@ -15,15 +15,18 @@ from .models import Country, View
 
 class IndexView(generic.ListView):
     template_name = 'early/index.html'
-    # context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        """Return the last five published questions."""
+        """Return the list of countries."""
         return Country.objects.order_by('country_text')
 
 class DetailView(generic.DetailView):
     model = Country
     template_name = 'early/detail.html'
+
+class ResultsView(generic.DetailView):
+    model = Country
+    template_name = 'early/results.html'    
 
 # ORIGINAL
 
