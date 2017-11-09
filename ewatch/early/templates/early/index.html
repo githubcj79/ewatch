@@ -1,0 +1,9 @@
+{% if country_list %}
+    <ul>
+    {% for country in country_list %}
+        <li><a href="{% url 'early:detail' country.id %}">{{ country.country_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No countries are available.</p>
+{% endif %}
