@@ -137,3 +137,5 @@ Intento Cambiar vista index para que muestre la lista de paises ...
 
 ~/Projects/ewatch/ewatch$ workon ewatch
 (ewatch) ~/Projects/ewatch/ewatch$ python manage.py runserver 8001
+
+My IP : $ ifconfig
