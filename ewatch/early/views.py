@@ -21,6 +21,10 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Country.objects.order_by('country_text')
 
+class DetailView(generic.DetailView):
+    model = Country
+    template_name = 'early/detail.html'
+
 # ORIGINAL
 
 # Create your views here.
