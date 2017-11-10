@@ -50,9 +50,9 @@ class ViewView(generic.DetailView):
         # print("get_context_data: BASE_DIR[%s]" % (BASE_DIR))
         # print("get_context_data: API_PATH[%s]" % (API_PATH))
 
-        print("get_context_data: view_text[%s]" % (view.view_text))
+        print("get_context_data: view_text[%s]" % (self.object.view_text))
 
-        group_services( view.view_text )
+        group_services( self.object.view_text )
 
         return context
 
