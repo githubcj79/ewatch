@@ -12,8 +12,16 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Especificos al desarrollo realizado
+API_PATH = os.path.join(BASE_DIR, 'early/utils/api')
+
+# Livestatus data, host con el que he hecho todas las pruebas
+livestatus_host = "172.18.171.130"
+livestatus_port = 6557
 
 
 # Quick-start development settings - unsuitable for production

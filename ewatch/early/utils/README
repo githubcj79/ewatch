@@ -1,0 +1,5 @@
+El uso de estas rutinas requiere la instalacción del módulo python kitchen.
+En el ejemplo que sigue se instala el módulo, en el ambiente virtual usado.
+
+Ejm:
+(ewatch) ~/Projects/ewatch/ewatch$ pip install kitchen

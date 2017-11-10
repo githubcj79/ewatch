@@ -2,12 +2,15 @@
 
 #-*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from __future__ import print_function
+
 
 from django.shortcuts import render
 
 # Incorporo mis utilitarios de Livestatus
 
-from utils.testing import a_function
+# from utils.testing import a_function
+from utils.group_services import group_services
 
 # FROM REPORT
 
@@ -40,7 +43,16 @@ class ViewView(generic.DetailView):
         context['some_thing'] = 'Hello world'
 
         # -- pruebo invocacion de a_function()
-        a_function( 'Hello world 2' )
+        # a_function( 'Hello world 2' )
+
+        # from ewatch.settings import BASE_DIR, API_PATH
+
+        # print("get_context_data: BASE_DIR[%s]" % (BASE_DIR))
+        # print("get_context_data: API_PATH[%s]" % (API_PATH))
+
+        print("get_context_data: view_text[%s]" % (view.view_text))
+
+        group_services( view.view_text )
 
         return context
 

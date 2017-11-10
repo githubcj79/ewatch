@@ -158,3 +158,5 @@ Type "help", "copyright", "credits" or "license" for more information.
 20171110
 
 git reset --hard c62c196e964
+
+(ewatch) ~/Projects/ewatch/ewatch$ pip install kitchen
