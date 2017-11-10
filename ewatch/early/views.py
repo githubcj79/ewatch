@@ -30,6 +30,15 @@ class DetailView(generic.DetailView):
 class ViewView(generic.DetailView):
     model = View
     template_name = 'early/view.html'
+    #---------------------------------
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewView, self).get_context_data(**kwargs)
+        context['publisher'] = self.object
+        context['some_thing'] = 'Hello world'
+        return context
+
+
 # ----------------------------------------
 
 class ResultsView(generic.DetailView):

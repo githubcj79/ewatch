@@ -1,3 +1,7 @@
 <h1>{{ view.view_text }}</h1>
 
+{% block content %}
+{% if some_thing %}<p><strong>{{ some_thing }}</strong></p>{% endif %}
+{% endblock %}
+
 <a href="{% url 'early:index' %}">Revisar otra vista ?</a>
