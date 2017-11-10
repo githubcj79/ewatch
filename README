@@ -154,3 +154,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> Country.objects.all()
 <QuerySet [<Country: CHILE>, <Country: BRASIL>]>
 >>>
+
+20171110
+
+git reset --hard c62c196e964
