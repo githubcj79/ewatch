@@ -26,7 +26,12 @@ class DetailView(generic.DetailView):
     model = Country
     template_name = 'early/detail.html'
 
+# ----------------------------------------
+class ViewView(generic.DetailView):
+    model = View
+    template_name = 'early/view.html'
+# ----------------------------------------
+
 class ResultsView(generic.DetailView):
     model = Country
     template_name = 'early/results.html'
-   
