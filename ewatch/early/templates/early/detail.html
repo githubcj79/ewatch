@@ -2,6 +2,10 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
+<ul>
 {% for view in country.view_set.all %}
-        <li><a href="{% url 'early:view' view.id %}">{{ view.view_text }}</a></li>
+    <li><a href="{% url 'early:view' view.id %}">{{ view.view_text }}</a></li>
 {% endfor %}
+</ul>
+
+<a href="{% url 'early:index' %}">Revisar otra vista ?</a>
