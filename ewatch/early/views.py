@@ -10,7 +10,7 @@ from django.shortcuts import render
 # Incorporo mis utilitarios de Livestatus
 
 # from utils.testing import a_function
-from utils.group_services import group_services
+from utils.group_services import group_services, show_group_services_data
 
 # FROM REPORT
 
@@ -51,8 +51,10 @@ class ViewView(generic.DetailView):
         # print("get_context_data: API_PATH[%s]" % (API_PATH))
 
         print("get_context_data: view_text[%s]" % (self.object.view_text))
+        group = self.object.view_text
 
-        group_services( self.object.view_text )
+        context['data'] = group_services( group )
+        show_group_services_data( context['data'] )
 
         return context
 
