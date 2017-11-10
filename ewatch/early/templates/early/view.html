@@ -2,6 +2,11 @@
 
 {% block content %}
 {% if some_thing %}<p><strong>{{ some_thing }}</strong></p>{% endif %}
+<ul>
+{% for host in hosts %}
+    <li>{{ host }}</li>
+{% endfor %}
+</ul>
 {% endblock %}
 
 <a href="{% url 'early:index' %}">Revisar otra vista ?</a>

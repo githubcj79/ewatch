@@ -53,8 +53,18 @@ class ViewView(generic.DetailView):
         print("get_context_data: view_text[%s]" % (self.object.view_text))
         group = self.object.view_text
 
-        context['data'] = group_services( group )
-        show_group_services_data( context['data'] )
+        # context['data'] = group_services( group )
+        # show_group_services_data( context['data'] )
+
+        _host   = 0
+        _cpu    = 1
+        _disk   = 2
+        _memory = 3
+
+        _data = group_services( group )
+        context['hosts'] = _data[_host]
+
+
 
         return context
 
