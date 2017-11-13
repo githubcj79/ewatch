@@ -10,7 +10,7 @@ from django.shortcuts import render
 # Incorporo mis utilitarios de Livestatus
 
 # from utils.testing import a_function
-from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk
+from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
 
 # FROM REPORT
 
@@ -55,14 +55,18 @@ class ViewView(generic.DetailView):
         hosts_list = []
         cpu_list = []
         disk_list = []
+        memory_list = []
+        
         for a_list in _data:
             hosts_list.append( a_list[_host] )
             cpu_list.append( show_cpu_load( a_list[_cpu] ) )
             disk_list.append( show_disk( a_list[_disk] ) )
+            memory_list.append( show_memory( a_list[_memory] ) )
 
         context['hosts'] = hosts_list
         context['cpus'] = cpu_list
         context['disks'] = disk_list
+        context['memories'] = memory_list
         # ------------------------------------------------
 
         return context

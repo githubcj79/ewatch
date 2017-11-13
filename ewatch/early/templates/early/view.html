@@ -6,8 +6,11 @@
 <ul>
 {% for host in hosts %}
     <li><strong>{{ host }}</strong></li>
-		<p>{{ cpus|lookup:forloop.counter0  }}</p>
-		<p>{{ disks|lookup:forloop.counter0  }}</p>
+		<p>
+			{{ cpus|lookup:forloop.counter0 }}<br>
+			{{ disks|lookup:forloop.counter0 }}<br>
+			{{ memories|lookup:forloop.counter0 }}
+		</p>
 {% endfor %}
 </ul>
 {% endblock %}

@@ -41,24 +41,12 @@ def get_item( input_str, pattern ):
 	else:
 		return( 'No Data' )
 
-# def show_cpu_load( str_cpu ):
-# 	pattern = r'^.*(load15=\d+\.\d+)\D+.*$'
-# 	print( "\tcpu_load[%s]" % ( get_item( str_cpu, pattern ) ))
-# 	if DEBUG:
-# 		print( "\tstr_cpu[%s]" % ( str_cpu ))
-
 def show_cpu_load( str_cpu ):
 	pattern = r'^.*(load15=\d+\.\d+)\D+.*$'
 	out_str = "\tcpu[%s]" % ( get_item( str_cpu, pattern ) )
 	if DEBUG:
 		print( out_str )
 	return out_str
-
-# def show_disk( str_disk ):
-# 	pattern = r'^.*(disk_utilization=\d+\.\d+)\D+.*$'
-# 	print( "\tstr_disk[%s]" % ( get_item( str_disk, pattern ) ))
-# 	if DEBUG:
-# 		print( "\tstr_disk[%s]" % ( str_disk ))
 
 def show_disk( str_disk ):
 	pattern = r'^.*(disk_utilization=\d+\.\d+)\D+.*$'
@@ -67,11 +55,18 @@ def show_disk( str_disk ):
 		print( out_str )
 	return out_str
 
+# def show_memory( str_memory ):
+# 	pattern = r'^.*(mem_total=\d+\.\d+)\D+(mem_used=\d+\.\d+)\D+.*$'
+# 	print( "\tstr_memory[%s]" % ( get_item( str_memory, pattern ) ))
+# 	if DEBUG:
+# 		print( "\tstr_memory[%s]" % ( str_memory ))
+
 def show_memory( str_memory ):
 	pattern = r'^.*(mem_total=\d+\.\d+)\D+(mem_used=\d+\.\d+)\D+.*$'
-	print( "\tstr_memory[%s]" % ( get_item( str_memory, pattern ) ))
+	out_str = "\tmemory[%s]" % ( get_item( str_memory, pattern ) )
 	if DEBUG:
-		print( "\tstr_memory[%s]" % ( str_memory ))
+		print( out_str )
+	return out_str
 
 def show_group_services_data( host_services_list ):
 
