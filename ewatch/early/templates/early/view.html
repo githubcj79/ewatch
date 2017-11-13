@@ -5,9 +5,8 @@
 {% if some_thing %}<p><strong>{{ some_thing }}</strong></p>{% endif %}
 <ul>
 {% for host in hosts %}
-    <li>{{ host }}</li>
-		<p>{{ forloop.counter0 }}</p>
-			{{ cpus|lookup:forloop.counter0  }}
+    <li><strong>{{ host }}</strong></li>
+		<p>{{ cpus|lookup:forloop.counter0  }}</p>
 {% endfor %}
 </ul>
 {% endblock %}

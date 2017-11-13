@@ -69,7 +69,9 @@ class ViewView(generic.DetailView):
         cpu_list = []
         for a_list in _data:
             hosts_list.append( a_list[_host] )
-            cpu_list.append( a_list[_cpu] )
+            str_cpu = "str_cpu[%s]" % ( a_list[_cpu] )
+            cpu_list.append( str_cpu )
+            # cpu_list.append( a_list[_cpu] )
 
         context['hosts'] = hosts_list
         context['cpus'] = cpu_list
