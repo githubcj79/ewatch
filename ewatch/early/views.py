@@ -10,7 +10,7 @@ from django.shortcuts import render
 # Incorporo mis utilitarios de Livestatus
 
 # from utils.testing import a_function
-from utils.group_services import group_services, show_group_services_data, show_cpu_load
+from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk
 
 # FROM REPORT
 
@@ -40,22 +40,9 @@ class ViewView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(ViewView, self).get_context_data(**kwargs)
         context['publisher'] = self.object
-        # context['some_thing'] = 'Hello world'
-
-        # -- pruebo invocacion de a_function()
-        # a_function( 'Hello world 2' )
-
-        # from ewatch.settings import BASE_DIR, API_PATH
-
-        # print("get_context_data: BASE_DIR[%s]" % (BASE_DIR))
-        # print("get_context_data: API_PATH[%s]" % (API_PATH))
 
         print("get_context_data: view_text[%s]" % (self.object.view_text))
         group = self.object.view_text
-
-        # context['data'] = group_services( group )
-        # show_group_services_data( context['data'] )
-
 
         _data = group_services( group )
 
@@ -70,14 +57,8 @@ class ViewView(generic.DetailView):
         disk_list = []
         for a_list in _data:
             hosts_list.append( a_list[_host] )
-            # str_cpu = "str_cpu[%s]" % ( a_list[_cpu] )
-            # cpu_list.append( str_cpu )
-
             cpu_list.append( show_cpu_load( a_list[_cpu] ) )
-
-
-
-            disk_list.append( a_list[_disk] )
+            disk_list.append( show_disk( a_list[_disk] ) )
 
         context['hosts'] = hosts_list
         context['cpus'] = cpu_list

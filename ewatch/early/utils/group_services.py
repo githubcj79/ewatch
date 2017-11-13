@@ -49,17 +49,23 @@ def get_item( input_str, pattern ):
 
 def show_cpu_load( str_cpu ):
 	pattern = r'^.*(load15=\d+\.\d+)\D+.*$'
-	out_str_cpu = "\tcpu[%s]" % ( get_item( str_cpu, pattern ) )
-	print( out_str_cpu )
+	out_str = "\tcpu[%s]" % ( get_item( str_cpu, pattern ) )
 	if DEBUG:
-		print( "\tstr_cpu[%s]" % ( str_cpu ))
-	return out_str_cpu
+		print( out_str )
+	return out_str
+
+# def show_disk( str_disk ):
+# 	pattern = r'^.*(disk_utilization=\d+\.\d+)\D+.*$'
+# 	print( "\tstr_disk[%s]" % ( get_item( str_disk, pattern ) ))
+# 	if DEBUG:
+# 		print( "\tstr_disk[%s]" % ( str_disk ))
 
 def show_disk( str_disk ):
 	pattern = r'^.*(disk_utilization=\d+\.\d+)\D+.*$'
-	print( "\tstr_disk[%s]" % ( get_item( str_disk, pattern ) ))
+	out_str = "\tdisk[%s]" % ( get_item( str_disk, pattern ) )
 	if DEBUG:
-		print( "\tstr_disk[%s]" % ( str_disk ))
+		print( out_str )
+	return out_str
 
 def show_memory( str_memory ):
 	pattern = r'^.*(mem_total=\d+\.\d+)\D+(mem_used=\d+\.\d+)\D+.*$'
