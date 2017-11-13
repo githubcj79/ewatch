@@ -160,3 +160,17 @@ Type "help", "copyright", "credits" or "license" for more information.
 git reset --hard c62c196e964
 
 (ewatch) ~/Projects/ewatch/ewatch$ pip install kitchen
+
+20171113
+
+python manage.py runserver 10.95.3.178:8001
+
+sudo netstat -tulpn | grep LISTEN
+~$ sudo netstat -tulpn | grep LISTEN
+~$ sudo iptables -A INPUT -p tcp -d 0/0 -s 0/0 --dport 8001 -j ACCEPT
+nmap localhost
+nmap 10.95.3.178
+
+settings.py
+    # ALLOWED_HOSTS = [ u'10.95.3.178',]
+    ALLOWED_HOSTS = [ u'*',]
