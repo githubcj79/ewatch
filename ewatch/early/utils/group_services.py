@@ -41,11 +41,19 @@ def get_item( input_str, pattern ):
 	else:
 		return( 'No Data' )
 
+# def show_cpu_load( str_cpu ):
+# 	pattern = r'^.*(load15=\d+\.\d+)\D+.*$'
+# 	print( "\tcpu_load[%s]" % ( get_item( str_cpu, pattern ) ))
+# 	if DEBUG:
+# 		print( "\tstr_cpu[%s]" % ( str_cpu ))
+
 def show_cpu_load( str_cpu ):
 	pattern = r'^.*(load15=\d+\.\d+)\D+.*$'
-	print( "\tcpu_load[%s]" % ( get_item( str_cpu, pattern ) ))
+	out_str_cpu = "\tcpu[%s]" % ( get_item( str_cpu, pattern ) )
+	print( out_str_cpu )
 	if DEBUG:
 		print( "\tstr_cpu[%s]" % ( str_cpu ))
+	return out_str_cpu
 
 def show_disk( str_disk ):
 	pattern = r'^.*(disk_utilization=\d+\.\d+)\D+.*$'
