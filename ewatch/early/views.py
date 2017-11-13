@@ -64,12 +64,15 @@ class ViewView(generic.DetailView):
         _cpu    = 1
         _disk   = 2
         _memory = 3
-        
+
         hosts_list = []
+        cpu_list = []
         for a_list in _data:
             hosts_list.append( a_list[_host] )
+            cpu_list.append( a_list[_cpu] )
 
         context['hosts'] = hosts_list
+        context['cpus'] = cpu_list
         # ------------------------------------------------
 
         return context

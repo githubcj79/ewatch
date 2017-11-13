@@ -1,0 +1,5 @@
+<p>{{ athlete.name }}</p>
+
+List-index lookup (e.g., foo[2])
+
+forloop.counter0
