@@ -40,7 +40,7 @@ class ViewView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(ViewView, self).get_context_data(**kwargs)
         context['publisher'] = self.object
-        context['some_thing'] = 'Hello world'
+        # context['some_thing'] = 'Hello world'
 
         # -- pruebo invocacion de a_function()
         # a_function( 'Hello world 2' )
@@ -56,15 +56,21 @@ class ViewView(generic.DetailView):
         # context['data'] = group_services( group )
         # show_group_services_data( context['data'] )
 
+
+        _data = group_services( group )
+
+        # ------------------------------------------------
         _host   = 0
         _cpu    = 1
         _disk   = 2
         _memory = 3
+        
+        hosts_list = []
+        for a_list in _data:
+            hosts_list.append( a_list[_host] )
 
-        _data = group_services( group )
-        context['hosts'] = _data[_host]
-
-
+        context['hosts'] = hosts_list
+        # ------------------------------------------------
 
         return context
 

@@ -133,6 +133,11 @@ def group_services( group ):
 		"Se agrega la sub lista a la lista principal"
 		host_services_list.append( host_services_sub_list )
 
+	if DEBUG:
+		print( "group_services: Antes de mostrar la data a retornar" )
+		show_group_services_data( host_services_list )
+
+
 	return host_services_list
 
 
