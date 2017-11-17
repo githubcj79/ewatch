@@ -3,3 +3,6 @@
 List-index lookup (e.g., foo[2])
 
 forloop.counter0
+
+{% load index %}
+{{ List|index:x }}

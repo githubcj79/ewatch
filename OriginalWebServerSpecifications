@@ -1,0 +1,28 @@
+    CPU - Intel Xeon E3-1220 $199.99
+        3.1 GHz Quad-Core
+        8 MB L3 Cache
+        LGA1150 Socket
+    Motherboard - Gigabyte GT Z97 $239.99
+        LGA1150 Processor Socket
+        Intel Z97 Express Bridge
+        ATX Form Factor
+        3200 MHz unbuffered
+        DDR3 Supported Memory (4 slots, up to 32 GB) 
+    RAM - If you’re feeling excited, go straight for 16 GB, but 8 GB should be enough. Also, ECC ram has very low voltage and is made for servers that run continuously - not necessary, but nice:
+        ECC - Crucial Server Memory Module (8 GB) $109.99
+            1600 MHz
+            PC3-12800 
+        Non-ECC - Kingston HyperX Memory (8 GB) $74.99
+            1333 MHz PC3-10600 
+    Hard Drive - Seagate Barracuda 1TB $54.99
+        7200 RPM
+        64 MB cache
+        SATA III 6 Gbit/s
+        3.5” Internal 
+    Video Card - n/a unless your server has specific graphic rendering needs
+    Optical Drive - LG Internal DVD Burner $12.99
+    Case/Tower - Thermaltake V2 S Mid Tower w/550W PSU $79.99
+    Keyboard & Mouse - Standard 104-Key Keyboard & Optical Mouse $14.00
+    Monitor - ASUS 20” LED Monitor $99.98
+    Operating System - Ubuntu FREE
+    Internet Connection - This one really depends on what your server is going to be doing. If you are going to be hosting large amounts of traffic, you may want to ensure you have gigabit internet with high upload bandwidth. That being said, most simple hosting tasks can be accomplished with anything that is above a basic connection.
