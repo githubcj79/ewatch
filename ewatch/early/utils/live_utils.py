@@ -55,7 +55,8 @@ def HostCriticalAlerts( conn, host ):
 	seconds_before	=	Seconds( DAYS_AGO )
 
 	lql = ("GET log\n" +
-		"Columns: time type options state\n" +
+		# "Columns: time type options state\n" +
+		"Columns: time type options\n" +
 		("Filter: host_name = %s\n" % host) +
 		("Filter: time >= %s\n" % seconds_before) +
 		("Filter: time <= %s\n" % seconds_now) +

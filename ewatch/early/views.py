@@ -11,7 +11,7 @@ from django.shortcuts import render
 
 # from utils.testing import a_function
 from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
-from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist
+from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostCriticalAlerts
 
 # FROM REPORT
 
@@ -45,7 +45,6 @@ class ViewView(generic.DetailView):
         print("get_context_data: view_text[%s]" % (self.object.view_text))
         group = self.object.view_text
 
-        # ------------------------------------------------
         _host   = 0
         _cpu    = 1
         _disk   = 2
@@ -55,29 +54,31 @@ class ViewView(generic.DetailView):
         cpu_list = []
         disk_list = []
         memory_list = []
+        alerts_list = []
         
         conn = LV_Connect()
-        print("get_context_data: conn[%s]" % (conn))
+        # print("get_context_data: conn[%s]" % (conn))
 
         hosts_to_process = HostsGroup( conn, group )
-        print( hosts_to_process )
+        # print( hosts_to_process )
 
         service_description_list = ['CPU load', 'Disk IO SUMMARY', 'Memory']
 
         for host in hosts_to_process:
-            hosts_list.append( host )
             print( host )
+            hosts_list.append( host )
 
+            '''
             i = _cpu - 1
             for desc in service_description_list:
                 a_list = ServiceStateHist( conn, host, desc )
-                print( a_list )
+                # print( a_list )
 
                 if len(a_list):
                     a_list = a_list[0]
                     print( a_list )
                     a_str = "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
-                    print( a_str )
+                    # print( a_str )
                     if _cpu == i + 1:
                         cpu_list.append( a_str )
                     if _disk == i + 1:
@@ -86,17 +87,29 @@ class ViewView(generic.DetailView):
                         memory_list.append( a_str )
                     i += 1
                     i %= _memory
+            '''
+        # ----------------solo para probar----------------
+            a_str = 'No Data'
+            cpu_list.append( a_str )
+            disk_list.append( a_str )
+            memory_list.append( a_str )
+        # ------------------------------------------------
+            new_alert_list = []
+            alerts_to_process = HostCriticalAlerts( conn, host )
+            for alert in alerts_to_process:
+                alert_str = ' '.join( map( str,alert ) )
+                print( alert_str )
+                new_alert_list.append( alert_str )
+                
+            alerts_list.append( new_alert_list )
 
-            # alert_list = HostCriticalAlerts( conn, host )
-            # for alert in alert_list:
-            #     print alert
+        # ------------------------------------------------
 
         context['hosts'] = hosts_list
         context['cpus'] = cpu_list
         context['disks'] = disk_list
         context['memories'] = memory_list
-        # ------------------------------------------------
-
+        context['alerts'] = alerts_list
 
         return context
 
