@@ -11,6 +11,7 @@ from django.shortcuts import render
 
 # from utils.testing import a_function
 from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
+from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist
 
 # FROM REPORT
 
@@ -34,6 +35,49 @@ class DetailView(generic.DetailView):
     template_name = 'early/detail.html'
 
 class ViewView(generic.DetailView):
+    model = View
+    template_name = 'early/view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewView, self).get_context_data(**kwargs)
+        context['publisher'] = self.object
+
+        print("get_context_data: view_text[%s]" % (self.object.view_text))
+        group = self.object.view_text
+
+        # ------------------------------------------------
+        conn = LV_Connect()
+        print("get_context_data: conn[%s]" % (conn))
+
+        hosts_list = HostsGroup( conn, group )
+        print( hosts_list )
+
+        service_description_list = ['CPU load', 'Memory', 'Disk IO SUMMARY']
+
+        for host in hosts_list:
+            # print( host )
+
+            for desc in service_description_list:
+                a_list = ServiceStateHist( conn, host, desc )
+                print( a_list )
+                return # solo para no hacer tan larga la iteracion
+
+        #         if len(a_list):
+        #             a_list = ServiceStateHist( conn, host, desc )[0]
+        #             print a_list
+        #             print "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
+
+            # alert_list = HostCriticalAlerts( conn, host )
+            # for alert in alert_list:
+            #     print alert
+
+
+        # ------------------------------------------------
+
+
+        return context
+
+class ViewView_old_version(generic.DetailView):
     model = View
     template_name = 'early/view.html'
 

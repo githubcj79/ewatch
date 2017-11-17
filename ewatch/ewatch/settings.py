@@ -23,6 +23,9 @@ API_PATH = os.path.join(BASE_DIR, 'early/utils/api')
 livestatus_host = "172.18.171.130"
 livestatus_port = 6557
 
+# Lapso en dias, usado para hacer las consultas historicas sobre Check_MK
+days_to_review = 1
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
