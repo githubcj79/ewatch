@@ -46,21 +46,46 @@ class ViewView(generic.DetailView):
         group = self.object.view_text
 
         # ------------------------------------------------
+        _host   = 0
+        _cpu    = 1
+        _disk   = 2
+        _memory = 3
+
+        hosts_list = []
+        cpu_list = []
+        disk_list = []
+        memory_list = []
+        
         conn = LV_Connect()
         print("get_context_data: conn[%s]" % (conn))
 
-        hosts_list = HostsGroup( conn, group )
-        print( hosts_list )
+        hosts_to_process = HostsGroup( conn, group )
+        print( hosts_to_process )
 
-        service_description_list = ['CPU load', 'Memory', 'Disk IO SUMMARY']
+        service_description_list = ['CPU load', 'Disk IO SUMMARY', 'Memory']
 
-        for host in hosts_list:
-            # print( host )
+        for host in hosts_to_process:
+            hosts_list.append( host )
+            print( host )
 
+            i = _cpu - 1
             for desc in service_description_list:
                 a_list = ServiceStateHist( conn, host, desc )
                 print( a_list )
-                return # solo para no hacer tan larga la iteracion
+
+                if len(a_list):
+                    a_list = a_list[0]
+                    print( a_list )
+                    a_str = "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
+                    print( a_str )
+                    if _cpu == i + 1:
+                        cpu_list.append( a_str )
+                    if _disk == i + 1:
+                        disk_list.append( a_str )
+                    if _memory == i + 1:
+                        memory_list.append( a_str )
+                    i += 1
+                    i %= _memory
 
         #         if len(a_list):
         #             a_list = ServiceStateHist( conn, host, desc )[0]
@@ -71,7 +96,10 @@ class ViewView(generic.DetailView):
             # for alert in alert_list:
             #     print alert
 
-
+        context['hosts'] = hosts_list
+        context['cpus'] = cpu_list
+        context['disks'] = disk_list
+        context['memories'] = memory_list
         # ------------------------------------------------
 
 
