@@ -87,11 +87,6 @@ class ViewView(generic.DetailView):
                     i += 1
                     i %= _memory
 
-        #         if len(a_list):
-        #             a_list = ServiceStateHist( conn, host, desc )[0]
-        #             print a_list
-        #             print "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
-
             # alert_list = HostCriticalAlerts( conn, host )
             # for alert in alert_list:
             #     print alert

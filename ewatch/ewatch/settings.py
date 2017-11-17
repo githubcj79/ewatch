@@ -24,7 +24,8 @@ livestatus_host = "172.18.171.130"
 livestatus_port = 6557
 
 # Lapso en dias, usado para hacer las consultas historicas sobre Check_MK
-days_to_review = 1
+# days_to_review = 1
+days_to_review = 0.3 # para acelerar las pruebas
 
 
 # Quick-start development settings - unsuitable for production
