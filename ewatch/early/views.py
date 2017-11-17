@@ -42,7 +42,7 @@ class ViewView(generic.DetailView):
         context = super(ViewView, self).get_context_data(**kwargs)
         context['publisher'] = self.object
 
-        print("get_context_data: view_text[%s]" % (self.object.view_text))
+        # print("get_context_data: view_text[%s]" % (self.object.view_text))
         group = self.object.view_text
 
         _host   = 0
@@ -65,7 +65,7 @@ class ViewView(generic.DetailView):
         service_description_list = ['CPU load', 'Disk IO SUMMARY', 'Memory']
 
         for host in hosts_to_process:
-            print( host )
+            # print( host )
             hosts_list.append( host )
 
             i = _cpu - 1
@@ -75,7 +75,7 @@ class ViewView(generic.DetailView):
 
                 if len(a_list):
                     a_list = a_list[0]
-                    print( a_list )
+                    # print( a_list )
                     a_str = "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
                     # print( a_str )
                     if _cpu == i + 1:
@@ -87,17 +87,18 @@ class ViewView(generic.DetailView):
                     i += 1
                     i %= _memory
 
-        # ----------------solo para probar----------------
+            # ----------------solo para probar----------------
             # a_str = 'No Data'
             # cpu_list.append( a_str )
             # disk_list.append( a_str )
             # memory_list.append( a_str )
-        # ------------------------------------------------
+            # ------------------------------------------------
+        
             new_alert_list = []
             alerts_to_process = HostCriticalAlerts( conn, host )
             for alert in alerts_to_process:
                 alert_str = ' '.join( map( str,alert ) )
-                print( alert_str )
+                # print( alert_str )
                 new_alert_list.append( alert_str )
 
             alerts_list.append( new_alert_list )
