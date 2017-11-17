@@ -11,7 +11,7 @@ from django.shortcuts import render
 
 # from utils.testing import a_function
 from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
-from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostCriticalAlerts
+from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts
 
 # FROM REPORT
 
@@ -68,6 +68,7 @@ class ViewView(generic.DetailView):
             # print( host )
             hosts_list.append( host )
 
+            '''
             i = _cpu - 1
             for desc in service_description_list:
                 a_list = ServiceStateHist( conn, host, desc )
@@ -86,16 +87,17 @@ class ViewView(generic.DetailView):
                         memory_list.append( a_str )
                     i += 1
                     i %= _memory
+            '''
 
             # ----------------solo para probar----------------
-            # a_str = 'No Data'
-            # cpu_list.append( a_str )
-            # disk_list.append( a_str )
-            # memory_list.append( a_str )
+            a_str = 'Solo para testing'
+            cpu_list.append( a_str )
+            disk_list.append( a_str )
+            memory_list.append( a_str )
             # ------------------------------------------------
         
             new_alert_list = []
-            alerts_to_process = HostCriticalAlerts( conn, host )
+            alerts_to_process = HostWarningAndCriticalAlerts( conn, host )
             for alert in alerts_to_process:
                 alert_str = ' '.join( map( str,alert ) )
                 # print( alert_str )

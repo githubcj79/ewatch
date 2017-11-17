@@ -49,7 +49,7 @@ def HostsGroup( conn, group ):
 	return hosts_list
 
 
-def HostCriticalAlerts( conn, host ):
+def HostWarningAndCriticalAlerts( conn, host ):
 	
 	seconds_now	=	Seconds( 0 )
 	seconds_before	=	Seconds( DAYS_AGO )
@@ -60,7 +60,9 @@ def HostCriticalAlerts( conn, host ):
 		("Filter: host_name = %s\n" % host) +
 		("Filter: time >= %s\n" % seconds_before) +
 		("Filter: time <= %s\n" % seconds_now) +
+		'Filter: state    = 1 \n' + # WARNING
 		'Filter: state    = 2 \n' + # CRITICAL
+		'Or: 2 \n' +
 		"Filter: class = 1\n") # 1 - host and service alerts
 
 	return LV_Execute( conn, lql )
