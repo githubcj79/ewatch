@@ -47,13 +47,13 @@ class ViewView(generic.DetailView):
         context = super(ViewView, self).get_context_data(**kwargs)
 
         group = self.object.view_text
-        print("get_context_data: group[%s]" % (group))
+        # print("get_context_data: group[%s]" % (group))
 
         conn = LV_Connect()
-        print("get_context_data: conn[%s]" % (conn))
+        # print("get_context_data: conn[%s]" % (conn))
 
         hosts_to_process = HostsGroup( conn, group )
-        print( hosts_to_process )
+        # print( hosts_to_process )
 
         hosts_list = []
         for hostname in hosts_to_process:

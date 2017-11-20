@@ -16,7 +16,6 @@ class HostState(object):
 		self.color = 'green'
 
 	def check_service(self, conn, desc):
-		desc = 'CPU load'
 		a_list = ServiceStateHist( conn, self.hostname, desc )
 		if len(a_list):
 			a_list = a_list[0]

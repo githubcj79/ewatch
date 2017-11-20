@@ -182,3 +182,7 @@ Las ideas:
 - llevar un indicador de color a .html y dinámicamente cambiarle el color al host
 - refactoring ... creando objeto host
 
+Done :)
+
+
+
