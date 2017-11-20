@@ -5,7 +5,7 @@
 {% if some_thing %}<p><strong>{{ some_thing }}</strong></p>{% endif %}
 <ul>
 {% for host in hosts %}
-    <li><strong>{{ host }}</strong></li>
+    <li><strong><font color={{ colors|lookup:forloop.counter0 }}>{{ host }} {{ colors|lookup:forloop.counter0 }}</font></strong></li>
 		<p>
 			{{ cpus|lookup:forloop.counter0 }}<br>
 			{{ disks|lookup:forloop.counter0 }}<br>

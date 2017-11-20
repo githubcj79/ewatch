@@ -57,7 +57,10 @@ class ViewView(generic.DetailView):
         memory_list = []
         alerts_list = []
         state_list = []
-        
+        #---------------------------------------------
+        color_list = []
+        #---------------------------------------------
+
         conn = LV_Connect()
         # print("get_context_data: conn[%s]" % (conn))
 
@@ -96,6 +99,9 @@ class ViewView(generic.DetailView):
             cpu_list.append( a_str )
             disk_list.append( a_str )
             memory_list.append( a_str )
+
+            color_str = 'green'
+            color_list.append( color_str )
             # ------------------------------------------------
         
             host_state = HostState( host )
@@ -105,15 +111,11 @@ class ViewView(generic.DetailView):
                 alert_str = ' '.join( map( str,alert ) )
                 # print( alert_str )
                 new_alert_list.append( alert_str )
-                #---------------------------------------------
                 host_state.check_alert( alert_str )
-                #---------------------------------------------
 
             alerts_list.append( new_alert_list )
             state_list.append( host_state.check_state )
             print( host_state )
-
-        # ------------------------------------------------
 
         context['hosts'] = hosts_list
         context['cpus'] = cpu_list
@@ -121,6 +123,11 @@ class ViewView(generic.DetailView):
         context['memories'] = memory_list
         context['alerts'] = alerts_list
         context['states'] = state_list
+        #---------------------------------------------
+        context['colors'] = color_list
+
+
+        #---------------------------------------------
 
         return context
 

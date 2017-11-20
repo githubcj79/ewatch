@@ -174,3 +174,10 @@ nmap 10.95.3.178
 settings.py
     # ALLOWED_HOSTS = [ u'10.95.3.178',]
     ALLOWED_HOSTS = [ u'*',]
+
+# -----------------------------------------------------------------------------
+
+Las ideas:
+
+- llevar un indicador de color a .html y dinámicamente cambiarle el color al host
+- refactoring ... creando objeto host
