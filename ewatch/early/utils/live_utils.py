@@ -86,6 +86,13 @@ def ServiceStateHist( conn, host, service_description ):
 
 	return LV_Execute( conn, lql )
 
+# def AlertState( state, str_alert ):
+# 	state_list = [ 'ok', 'warn', 'crit' ]
+
+# 	if state not in state_list:
+# 		raise Exception("AlertState: state[%s] no es valido." % (state)) 
+
+
 
 def main( group ):
 	'''

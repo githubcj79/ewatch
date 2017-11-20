@@ -12,6 +12,7 @@ from django.shortcuts import render
 # from utils.testing import a_function
 from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
 from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts
+from utils.state_class import HostState
 
 # FROM REPORT
 
@@ -55,6 +56,7 @@ class ViewView(generic.DetailView):
         disk_list = []
         memory_list = []
         alerts_list = []
+        state_list = []
         
         conn = LV_Connect()
         # print("get_context_data: conn[%s]" % (conn))
@@ -96,14 +98,20 @@ class ViewView(generic.DetailView):
             memory_list.append( a_str )
             # ------------------------------------------------
         
+            host_state = HostState( host )
             new_alert_list = []
             alerts_to_process = HostWarningAndCriticalAlerts( conn, host )
             for alert in alerts_to_process:
                 alert_str = ' '.join( map( str,alert ) )
                 # print( alert_str )
                 new_alert_list.append( alert_str )
+                #---------------------------------------------
+                host_state.check_alert( alert_str )
+                #---------------------------------------------
 
             alerts_list.append( new_alert_list )
+            state_list.append( host_state.check_state )
+            print( host_state )
 
         # ------------------------------------------------
 
@@ -112,6 +120,7 @@ class ViewView(generic.DetailView):
         context['disks'] = disk_list
         context['memories'] = memory_list
         context['alerts'] = alerts_list
+        context['states'] = state_list
 
         return context
 
