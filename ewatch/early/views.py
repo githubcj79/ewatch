@@ -35,7 +35,44 @@ class DetailView(generic.DetailView):
     model = Country
     template_name = 'early/detail.html'
 
+class ResultsView(generic.DetailView):
+    model = Country
+    template_name = 'early/results.html'
+
+
 class ViewView(generic.DetailView):
+    model = View
+    template_name = 'early/view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewView, self).get_context_data(**kwargs)
+        context['publisher'] = self.object
+
+        group = self.object.view_text
+        print("get_context_data: group[%s]" % (group))
+
+        conn = LV_Connect()
+        print("get_context_data: conn[%s]" % (conn))
+
+        hosts_to_process = HostsGroup( conn, group )
+        print( hosts_to_process )
+
+        hosts_list = []
+        for hostname in hosts_to_process:
+            print( hostname )
+            Host = HostState( hostname )
+            Host.check_cpu( conn )
+            Host.check_disk( conn )
+            Host.check_memory( conn )
+            Host.check_alerts( conn )
+            hosts_list.append( Host )
+
+        context['hosts'] = hosts_list
+
+        return context
+
+
+class ViewView_old(generic.DetailView):
     model = View
     template_name = 'early/view.html'
 
@@ -132,44 +169,3 @@ class ViewView(generic.DetailView):
 
         return context
 
-class ViewView_old_version(generic.DetailView):
-    model = View
-    template_name = 'early/view.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ViewView, self).get_context_data(**kwargs)
-        context['publisher'] = self.object
-
-        print("get_context_data: view_text[%s]" % (self.object.view_text))
-        group = self.object.view_text
-
-        _data = group_services( group )
-
-        # ------------------------------------------------
-        _host   = 0
-        _cpu    = 1
-        _disk   = 2
-        _memory = 3
-
-        hosts_list = []
-        cpu_list = []
-        disk_list = []
-        memory_list = []
-        
-        for a_list in _data:
-            hosts_list.append( a_list[_host] )
-            cpu_list.append( show_cpu_load( a_list[_cpu] ) )
-            disk_list.append( show_disk( a_list[_disk] ) )
-            memory_list.append( show_memory( a_list[_memory] ) )
-
-        context['hosts'] = hosts_list
-        context['cpus'] = cpu_list
-        context['disks'] = disk_list
-        context['memories'] = memory_list
-        # ------------------------------------------------
-
-        return context
-
-class ResultsView(generic.DetailView):
-    model = Country
-    template_name = 'early/results.html'

@@ -5,18 +5,18 @@
 
 <ul>
 {% for host in hosts %}
-    <li><strong><font color={{ colors|lookup:forloop.counter0 }}>{{ host }}</font></strong></li>
+    <li><strong><font color={{ host.color }}>{{ host.hostname }}</font></strong></li>
 		<p>
-			{{ cpus|lookup:forloop.counter0 }}<br>
-			{{ disks|lookup:forloop.counter0 }}<br>
-			{{ memories|lookup:forloop.counter0 }}
+			{{ host.cpu }}<br>
+			{{ host.disk }}<br>
+			{{ host.memory }}
 		</p>
 
-	{% if alerts|lookup:forloop.counter0 %}
+	{% if host.alerts %}
 
 		<table border="1" alerts="Alertas">
 			<tr><th>ALERTAS</th>
-				{% for alert in alerts|lookup:forloop.counter0 %}
+				{% for alert in host.alerts %}
 					<tr><td style="font-size:10px;">{{ alert }}</td></tr>
 				{% endfor %}
 		</table>
