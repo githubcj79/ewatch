@@ -2,21 +2,30 @@
 
 {% block content %}
 {% load poll_extras %}
-{% if some_thing %}<p><strong>{{ some_thing }}</strong></p>{% endif %}
+
 <ul>
 {% for host in hosts %}
-    <li><strong><font color={{ colors|lookup:forloop.counter0 }}>{{ host }} {{ colors|lookup:forloop.counter0 }}</font></strong></li>
+    <li><strong><font color={{ colors|lookup:forloop.counter0 }}>{{ host }}</font></strong></li>
 		<p>
 			{{ cpus|lookup:forloop.counter0 }}<br>
 			{{ disks|lookup:forloop.counter0 }}<br>
 			{{ memories|lookup:forloop.counter0 }}
 		</p>
-		{% for alert in alerts|lookup:forloop.counter0 %}
-			<p>
-				{{ alert }}
-			</p>
 
-		{% endfor %}
+	{% if alerts|lookup:forloop.counter0 %}
+
+		<table alerts="Alertas">
+			<tr><th>ALERTAS</th>
+				{% for alert in alerts|lookup:forloop.counter0 %}
+					<tr><td style="font-size:10px;">{{ alert }}</td></tr>
+				{% endfor %}
+		</table>
+
+		<br>
+
+	{% endif %}
+
+
 {% endfor %}
 </ul>
 {% endblock %}
