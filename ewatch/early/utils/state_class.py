@@ -12,21 +12,29 @@ class HostState(object):
 		super(HostState, self).__init__()
 		self.hostname = hostname
 		self.state = 'OK'
+		self.color = 'green'
 
 	def check_alert(self, str_alert):
 		if self.state == 'CRITICAL':
+			self.color = 'red'
 			return
 
 		if 'CRITICAL' in str_alert:
 			self.state = 'CRITICAL'
+			self.color = 'red'
 			return
 
 		if 'WARNING' in str_alert:
 			self.state = 'WARNING'
+			# self.color = 'yellow'
+			self.color = '#cccc00'
 			return
 
 	def check_state(self):
 		return self.state
+
+	def check_color(self):
+		return self.color
 
 	def __str__(self):
 		return "%s: %s" % (self.hostname, self.state)

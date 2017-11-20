@@ -100,8 +100,8 @@ class ViewView(generic.DetailView):
             disk_list.append( a_str )
             memory_list.append( a_str )
 
-            color_str = 'green'
-            color_list.append( color_str )
+            # color_str = 'green'
+            # color_list.append( color_str )
             # ------------------------------------------------
         
             host_state = HostState( host )
@@ -114,7 +114,8 @@ class ViewView(generic.DetailView):
                 host_state.check_alert( alert_str )
 
             alerts_list.append( new_alert_list )
-            state_list.append( host_state.check_state )
+            state_list.append( host_state.check_state() )
+            color_list.append( host_state.check_color() )
             print( host_state )
 
         context['hosts'] = hosts_list
