@@ -39,14 +39,12 @@ class ResultsView(generic.DetailView):
     model = Country
     template_name = 'early/results.html'
 
-
 class ViewView(generic.DetailView):
     model = View
     template_name = 'early/view.html'
 
     def get_context_data(self, **kwargs):
         context = super(ViewView, self).get_context_data(**kwargs)
-        context['publisher'] = self.object
 
         group = self.object.view_text
         print("get_context_data: group[%s]" % (group))
@@ -70,102 +68,3 @@ class ViewView(generic.DetailView):
         context['hosts'] = hosts_list
 
         return context
-
-
-class ViewView_old(generic.DetailView):
-    model = View
-    template_name = 'early/view.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ViewView, self).get_context_data(**kwargs)
-        context['publisher'] = self.object
-
-        # print("get_context_data: view_text[%s]" % (self.object.view_text))
-        group = self.object.view_text
-
-        _host   = 0
-        _cpu    = 1
-        _disk   = 2
-        _memory = 3
-
-        hosts_list = []
-        cpu_list = []
-        disk_list = []
-        memory_list = []
-        alerts_list = []
-        state_list = []
-        #---------------------------------------------
-        color_list = []
-        #---------------------------------------------
-
-        conn = LV_Connect()
-        # print("get_context_data: conn[%s]" % (conn))
-
-        hosts_to_process = HostsGroup( conn, group )
-        # print( hosts_to_process )
-
-        service_description_list = ['CPU load', 'Disk IO SUMMARY', 'Memory']
-
-        for host in hosts_to_process:
-            # print( host )
-            hosts_list.append( host )
-
-            '''
-            i = _cpu - 1
-            for desc in service_description_list:
-                a_list = ServiceStateHist( conn, host, desc )
-                # print( a_list )
-
-                if len(a_list):
-                    a_list = a_list[0]
-                    # print( a_list )
-                    a_str = "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
-                    # print( a_str )
-                    if _cpu == i + 1:
-                        cpu_list.append( a_str )
-                    if _disk == i + 1:
-                        disk_list.append( a_str )
-                    if _memory == i + 1:
-                        memory_list.append( a_str )
-                    i += 1
-                    i %= _memory
-            '''
-
-            # ----------------solo para probar----------------
-            a_str = 'Solo para testing'
-            cpu_list.append( a_str )
-            disk_list.append( a_str )
-            memory_list.append( a_str )
-
-            # color_str = 'green'
-            # color_list.append( color_str )
-            # ------------------------------------------------
-        
-            host_state = HostState( host )
-            new_alert_list = []
-            alerts_to_process = HostWarningAndCriticalAlerts( conn, host )
-            for alert in alerts_to_process:
-                alert_str = ' '.join( map( str,alert ) )
-                # print( alert_str )
-                new_alert_list.append( alert_str )
-                host_state.check_alert( alert_str )
-
-            alerts_list.append( new_alert_list )
-            state_list.append( host_state.check_state() )
-            color_list.append( host_state.check_color() )
-            print( host_state )
-
-        context['hosts'] = hosts_list
-        context['cpus'] = cpu_list
-        context['disks'] = disk_list
-        context['memories'] = memory_list
-        context['alerts'] = alerts_list
-        context['states'] = state_list
-        #---------------------------------------------
-        context['colors'] = color_list
-
-
-        #---------------------------------------------
-
-        return context
-
