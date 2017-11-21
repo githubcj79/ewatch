@@ -5,6 +5,34 @@ from __future__ import print_function
 
 from early.utils.live_utils import ServiceStateHist, HostWarningAndCriticalAlerts
 
+# ---------------------------------------------------------
+class GroupState(object):
+	"""Almacena el estado de un grupo, en base al análisis de los estados de los hosts contituyentes."""
+
+	def __init__(self, groupname):
+		super(GroupState, self).__init__()
+		self.groupname = groupname
+		self.state = 'OK'
+		self.color = 'green'
+
+	def check_host_state(self, host_state):
+		if self.state == 'CRITICAL':
+			self.color = 'red'
+			return
+
+		if  host_state == 'CRITICAL':
+			self.state = 'CRITICAL'
+			self.color = 'red'
+			return
+
+		if host_state == 'WARNING':
+			self.state = 'WARNING'
+			# self.color = 'yellow'
+			self.color = '#cccc00'
+			return
+
+# ---------------------------------------------------------
+
 
 class HostState(object):
 	"""Almacena el estado de un host, en base al análisis de la alertas vía Livestatus."""

@@ -12,7 +12,7 @@ from django.shortcuts import render
 # from utils.testing import a_function
 from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
 from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts
-from utils.state_class import HostState
+from utils.state_class import HostState, GroupState
 
 # FROM REPORT
 
@@ -39,6 +39,7 @@ class ResultsView(generic.DetailView):
     model = Country
     template_name = 'early/results.html'
 
+
 class ViewView(generic.DetailView):
     model = View
     template_name = 'early/view.html'
@@ -56,6 +57,9 @@ class ViewView(generic.DetailView):
         # print( hosts_to_process )
 
         hosts_list = []
+        # ------------------------------------------------------------
+        Group = GroupState( group )
+        # ------------------------------------------------------------
         for hostname in hosts_to_process:
             print( hostname )
             Host = HostState( hostname )
@@ -64,7 +68,13 @@ class ViewView(generic.DetailView):
             Host.check_memory( conn )
             Host.check_alerts( conn )
             hosts_list.append( Host )
+            # ------------------------------------------------------------
+            Group.check_host_state( Host.state )
+            # ------------------------------------------------------------
 
         context['hosts'] = hosts_list
+        # ------------------------------------------------------------
+        context['group'] = Group
+        # ------------------------------------------------------------
 
         return context
