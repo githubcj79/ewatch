@@ -191,3 +191,29 @@ Done :)
 Idea:
 
 - darle color al grupo en la web page.
+
+Done.
+
+# -----------------------------------------------------------------------------
+
+20171121
+
+Conversación con Juan Carlos
+
+    - Idea, que la aplicación que desarrollé vaya a buscar en alguna parte de Chech_MK,
+        los grupos a monitorear.
+
+Idea:
+
+- estudiar el paso a producción
+
+# -----------------------------------------------------------------------------
+
+20171121
+
+(ewatch) ~/Projects/ewatch/ewatch/early$ python -c "import  setuptools"
+(ewatch) ~/Projects/ewatch/ewatch/early$ echo $?
+0 <-- instalado
+1 <-- no instalado
+
+# -----------------------------------------------------------------------------
