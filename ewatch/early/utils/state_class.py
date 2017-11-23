@@ -54,15 +54,15 @@ class HostState(object):
 
 	def check_cpu(self, conn):
 		desc = 'CPU load'
-		self.cpu = self.check_service(conn, desc)
+		# self.cpu = self.check_service(conn, desc)
 
 	def check_disk(self, conn):
 		desc = 'Disk IO SUMMARY'
-		self.disk = self.check_service(conn, desc)
+		# self.disk = self.check_service(conn, desc)
 
 	def check_memory(self, conn):
 		desc = 'Memory'
-		self.memory = self.check_service(conn, desc)
+		# self.memory = self.check_service(conn, desc)
 
 	def check_alert(self, str_alert):
 		if self.state == 'CRITICAL':
