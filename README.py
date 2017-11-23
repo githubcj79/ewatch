@@ -217,3 +217,8 @@ Idea:
 1 <-- no instalado
 
 # -----------------------------------------------------------------------------
+
+20171123
+
+César solicita semáforo variable, según estado del grupo.
+Indica basarse en semáforos que tiene la presentación.
