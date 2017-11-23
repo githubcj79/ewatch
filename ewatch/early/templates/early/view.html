@@ -1,7 +1,12 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'early/style.css' %}" />
-
+{% if group.color == 'green' %}
+	<link rel="stylesheet" type="text/css" href="{% static 'early/style_green.css' %}" />
+{% elif group.color == 'red' %}
+	<link rel="stylesheet" type="text/css" href="{% static 'early/style_red.css' %}" />
+{% else %}
+	<link rel="stylesheet" type="text/css" href="{% static 'early/style_yellow.css' %}" />
+{% endif %}
 
 <h1 style="color: {{ group.color }};margin-left: 1em;">{{ view.view_text }}</h1>
 
