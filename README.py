@@ -222,3 +222,14 @@ Idea:
 
 César solicita semáforo variable, según estado del grupo.
 Indica basarse en semáforos que tiene la presentación.
+
+# -----------------------------------------------------------------------------
+
+20171128
+
+César solicita detectar todos los grupos, "por pais".
+
+Mostrar lista de grupos por "pais"
+
+    Seleccionar grupo --> y mostrar lo de siempre ....
+                            (uso cpu, disk, memory & alerts)
