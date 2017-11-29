@@ -3,6 +3,8 @@
 
 import livestatus
 import sys
+import re
+
 
 from early.utils.date_time_utils import Seconds
 # from early.utils.raw_data import raw_table_lql
@@ -48,6 +50,88 @@ def HostsGroup( conn, group ):
 
 	return hosts_list
 
+def GroupInCountry( group ):
+	'''
+	Retorna True si group comienza con uno de los prefijos de pais aquí definidos.
+	'''
+	prefix_list = [ r'CL_', r'AR_', r'PE_', r'CO_', r'BR_', ]
+
+	for prefix in prefix_list:
+		if re.match( prefix, group, re.M|re.I):
+			return True
+
+	return None
+
+def GroupsSet( conn ):
+	'''
+	Retorna un set con todos los grupos detectados.
+
+	See patterns in https://www.tutorialspoint.com/python/python_reg_expressions.htm
+	'''
+
+	lql = "GET hostsbygroup\nColumns: custom_variable_values display_name"
+	a_list = LV_Execute( conn, lql )
+
+	pattern = r'^.*CAPA_LOGICA\s+(\S+)\D+.*$'
+	compiled_pattern = re.compile( pattern )
+
+	group_set = set()
+	for sublist in a_list:
+		search = compiled_pattern.search( str( sublist ) )
+		if search:
+			group = search.groups()[0]
+			# print( group )
+			if GroupInCountry( group ):
+				group_set.add( group )
+
+	return group_set
+
+def CountryOfGroup( group ):
+	'''
+	Retorna el prefijo del pais del grupo.
+	Si no tiene un prefijo conocido, retorna None.
+	'''
+	prefix_list = [ r'CL_', r'AR_', r'PE_', r'CO_', r'BR_', ]
+
+	for prefix in prefix_list:
+		if re.match( prefix, group, re.M|re.I):
+			return prefix
+
+	return None
+
+def GroupsDictionary( conn ):
+	'''
+	Retorna un dictionario en que las key son los prefijos de los paises,
+	y los values son sets con los grupos detectados de cada pais.
+
+	See patterns in https://www.tutorialspoint.com/python/python_reg_expressions.htm
+	See dictionary en https://stackoverflow.com/questions/1024847/add-new-keys-to-a-dictionary
+	'''
+
+	lql = "GET hostsbygroup\nColumns: custom_variable_values display_name"
+	a_list = LV_Execute( conn, lql )
+
+	pattern = r'^.*CAPA_LOGICA\s+(\S+)\D+.*$'
+	compiled_pattern = re.compile( pattern )
+
+	# group_set = set()
+	group_dict = dict()
+	for sublist in a_list:
+		search = compiled_pattern.search( str( sublist ) )
+		if search:
+			group = search.groups()[0]
+			# print( group )
+			country = CountryOfGroup( group )
+			if country:
+				if country in group_dict:
+					key_set = group_dict[ country ]
+				else:
+					key_set = set()
+				key_set.add( group )
+				group_dict[ country ] = key_set
+
+	return group_dict
+	
 
 def HostWarningAndCriticalAlerts( conn, host ):
 	
@@ -106,24 +190,52 @@ def main( group ):
 	conn = LV_Connect()
 
 	hosts_list = HostsGroup( conn, group )
-	# print( hosts_list )
+	print( hosts_list )
+	print(' ')
 
-	service_description_list = ['CPU load', 'Memory', 'Disk IO SUMMARY']
+	# Idea invocar a función que retorna set con todos los grupos
+	# CL_xxx  --> grupo de Chile, etc
 
-	for host in hosts_list:
-		print host
-		alert_list = HostCriticalAlerts( conn, host )
-		for alert in alert_list:
-			print alert
-		for desc in service_description_list:
-			a_list = ServiceStateHist( conn, host, desc )
-			if len(a_list):
-				a_list = ServiceStateHist( conn, host, desc )[0]
-				print a_list
-				print "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
+	group_set = GroupsSet( conn )
+	print( group_set )
+	print(' ')
+
+	# --> aqui voy
+	group_dict = GroupsDictionary( conn )
+	print( group_dict )
+	print(' ')
+
+
+
+
+
+
+
+
+	# service_description_list = ['CPU load', 'Memory', 'Disk IO SUMMARY']
+
+	# for host in hosts_list:
+	# 	print host
+	# 	alert_list = HostCriticalAlerts( conn, host )
+	# 	for alert in alert_list:
+	# 		print alert
+	# 	for desc in service_description_list:
+	# 		a_list = ServiceStateHist( conn, host, desc )
+	# 		if len(a_list):
+	# 			a_list = ServiceStateHist( conn, host, desc )[0]
+	# 			print a_list
+	# 			print "%s %.1f%% OK %.1f%% WARNING %.1f%% CRITICAL" % (desc, 100 * float(a_list[-3]), 100 * float(a_list[-2]), 100 * float(a_list[-1]))
 
 
 if __name__ == '__main__':
-	group, dias = raw_input("GRUPO DIAS_A_REVISAR : ").split(' ')
+	# group, dias = raw_input("GRUPO DIAS_A_REVISAR : ").split(' ')
+
+	# Sólo para acelerar las pruebas
+	# group = 'CL_POS_REGIONAL'
+	group = 'CL_MANHATTAN'
+
+	
+	dias = 1
+
 	DAYS_AGO = int(dias)
 	main( group )
