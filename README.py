@@ -233,3 +233,40 @@ Mostrar lista de grupos por "pais"
 
     Seleccionar grupo --> y mostrar lo de siempre ....
                             (uso cpu, disk, memory & alerts)
+
+    Estoy viendo si puedo detectar grupos en /home/carlos/Labs/mk-livestatus-20171128
+
+César envió la siguiente lista a incorporar:
+
+Por Peru:
+ 
+PE-BANCO PERU SIEBEL                    --> PE_BANCO_PERU_SIEBEL
+PE-PANGUI                                   PE_PANGUI
+PE-PORTAL PROVEEDORES                       PE_PORTAL_PROVEEDORES
+PE-SERVIDORES BANCO                         PE_SERVIDORES_BANCO
+PE-SWITCH DE TRANSACCIONES                  PE_SWITCH_DE_TRANSACCIONES
+PE-SISTEMAS CENTRO DE DISTRIBUCION          PE_SISTEMAS_CENTRO_DE_DISTRIBUCION
+ 
+Por Argentina:
+ 
+AR-BIZTALK                              --> AR_BIZTALK
+AR-APLICACIONES RRHH                        AR_APLICACIONES_RRHH
+AR-BUXIS                                    AR_BUXIS
+AR-ENGAGE                                   AR_ENGAGE
+AR-PANGUI                                   AR_PANGUI
+ 
+Por Colombia:
+ 
+CO-FLEJES                               --> CO_FLEJES
+CO-GENESIX                                  CO_GENESIX
+CO-MICROSTRATEGY                            CO_MICROSTRATEGY
+CO-TERMINAL_SERVER                          CO_TERMINAL_SERVER
+ 
+ 
+Por Brasil:
+ 
+BR-BRETAS                               --> BR_BRETAS
+BR-CARTAO                                   BR_CARTAO
+BR-EMPORIUM                                 BR_EMPORIUM
+BR-NOTA_FISCAL                              BR_NOTA_FISCAL
+BR-SITEF                                    BR_SITEF
