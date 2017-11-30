@@ -21,10 +21,6 @@ from django.urls import reverse
 from django.views import generic
 from django.template import loader
 
-
-
-
-
 from .models import Country, View
 
 
@@ -74,7 +70,8 @@ class DetailView(generic.DetailView):
             _prefix = country_dict[ _country ]
         else:
             print("views.py: class DetailView: key[%s] no existe en country_dict !!!" % (_country))
-            exit( 1 )
+            _prefix = None
+            # exit( 1 )
         print( _prefix )
 
         conn = LV_Connect()
@@ -87,7 +84,8 @@ class DetailView(generic.DetailView):
             group_set = groups_dict[ _prefix ]
         else:
             print("views.py: class DetailView: key[%s] no existe en groups_dict !!!" % (_prefix))
-            exit( 1 )
+            group_set = set()
+            # exit( 1 )
         print( group_set )
 
         # -------------------------------------------------------
@@ -106,52 +104,6 @@ class ResultsView(generic.DetailView):
     model = Country
     template_name = 'early/results.html'
 
-
-class ViewView(generic.DetailView):
-
-    model = View
-    template_name = 'early/view.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ViewView, self).get_context_data(**kwargs)
-
-        group = self.kwargs['group']
-
-        # group = self.object.view_text
-        print("get_context_data: group[%s]" % (group))
-
-        conn = LV_Connect()
-        # print("get_context_data: conn[%s]" % (conn))
-
-        hosts_to_process = HostsGroup( conn, group )
-        # print( hosts_to_process )
-
-        hosts_list = []
-        # ------------------------------------------------------------
-        Group = GroupState( group )
-        # ------------------------------------------------------------
-        for hostname in hosts_to_process:
-            print( hostname )
-            Host = HostState( hostname )
-            Host.check_cpu( conn )
-            Host.check_disk( conn )
-            Host.check_memory( conn )
-            Host.check_alerts( conn )
-            hosts_list.append( Host )
-            # ------------------------------------------------------------
-            Group.check_host_state( Host.state )
-            # ------------------------------------------------------------
-
-        context['hosts'] = hosts_list
-        # ------------------------------------------------------------
-        context['group'] = Group
-        # ------------------------------------------------------------
-
-        return context
-
-
-# def view(request, group):
-#     return HttpResponse("You're looking at group %s." % group)
 
 def view(request, group):
     # return HttpResponse("You're looking at group %s." % group)

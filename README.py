@@ -282,3 +282,12 @@ Idea:
     en template detail.html, mostrar set de grupos asociados a pais, con <a rel > asociado a
     algo como ../group, de forma de en urlconfig detectar el grupo, vía expresion regular
     y capturarlo para luego, mostrar info habitual de hosts constituyentes
+
+Amazing: It works !!!!
+
+Temas abiertos:
+
+- BRASIL, ahora se va de espaldas al no tener grupos ...    FIXED
+- Agregar los paises restantes a la b.d FIXED
+
+- Cambiar despliegue por lista ...
