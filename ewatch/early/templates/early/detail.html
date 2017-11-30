@@ -2,8 +2,8 @@
 
 <ul>
 {% for view in group_list %}
-    {# <li><a href="{% url 'early:view' view %}">{{ view }}</a></li> #}
-    <li>{{ view }}</li>
+    <li><a href="{% url 'early:view' view %}">{{ view }}</a></li>
+    {# <li>{{ view }}</li> #}
 {% endfor %}
 </ul>
 

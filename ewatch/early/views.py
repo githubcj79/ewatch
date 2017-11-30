@@ -16,7 +16,7 @@ from utils.state_class import HostState, GroupState
 # FROM REPORT
 
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
 
@@ -103,14 +103,17 @@ class ResultsView(generic.DetailView):
 
 
 class ViewView(generic.DetailView):
+
     model = View
     template_name = 'early/view.html'
 
     def get_context_data(self, **kwargs):
         context = super(ViewView, self).get_context_data(**kwargs)
 
-        group = self.object.view_text
-        # print("get_context_data: group[%s]" % (group))
+        group = self.kwargs['group']
+
+        # group = self.object.view_text
+        print("get_context_data: group[%s]" % (group))
 
         conn = LV_Connect()
         # print("get_context_data: conn[%s]" % (conn))
@@ -140,3 +143,7 @@ class ViewView(generic.DetailView):
         # ------------------------------------------------------------
 
         return context
+
+
+def view(request, group):
+    return HttpResponse("You're looking at group %s." % group)
