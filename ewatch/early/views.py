@@ -91,7 +91,7 @@ class DetailView(generic.DetailView):
         '''
         OJO: Debería convertir set en lista y ordenarla y pasar a template la lista ...
         '''
-        context['group_set'] = group_set
+        context['group_list'] = sorted(list(group_set))
         # -------------------------------------------------------
         return context
 
