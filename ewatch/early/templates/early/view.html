@@ -1,14 +1,30 @@
 {% load static %}
 
-{% if group.color == 'green' %}
-	<link rel="stylesheet" type="text/css" href="{% static 'early/style_green.css' %}" />
-{% elif group.color == 'red' %}
-	<link rel="stylesheet" type="text/css" href="{% static 'early/style_red.css' %}" />
-{% else %}
-	<link rel="stylesheet" type="text/css" href="{% static 'early/style_yellow.css' %}" />
+{% if host.alerts %}
+
+	{% if group.color == 'green' %}
+		<link rel="stylesheet" type="text/css" href="{% static 'early/style_green.css' %}" />
+	{% elif group.color == 'red' %}
+		<link rel="stylesheet" type="text/css" href="{% static 'early/style_red.css' %}" />
+	{% else %}
+		<link rel="stylesheet" type="text/css" href="{% static 'early/style_yellow.css' %}" />
+	{% endif %}
+
 {% endif %}
 
-<h1 style="color: {{ group.color }};margin-left: 1em;">{{ group.groupname }}</h1>
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'early/style.css' %}" />
+
+<div class="background-image">
+	{# <h1 style="color: {{ group.color }};margin-left: 1em;">{{ group.groupname }}</h1> #}
+	<h1 style="color: {{ group.color }};margin-left: 2em;">{{ group.groupname }}</h1>
+</div>
+
+
+
+
+
 
 {% block content %}
 {% load poll_extras %}

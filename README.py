@@ -290,4 +290,4 @@ Temas abiertos:
 - BRASIL, ahora se va de espaldas al no tener grupos ...    FIXED
 - Agregar los paises restantes a la b.d FIXED
 
-- Cambiar despliegue por lista ...
+- Cambiar despliegue por lista ...  FIXED
