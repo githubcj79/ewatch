@@ -1,11 +1,16 @@
 <h1>{{ country_text }}</h1>
 
-<select size="1" name="links" onchange="window.location.href=this.value;">
-	{% for view in group_list %}
-		<option value="{% url 'early:view' view %}">{{ view }}</option>
-	{% endfor %}
-</select>
-<br>
-<br>
+{% if group_list %}
+
+	<select size="1" name="links" onchange="window.location.href=this.value;">
+		{% for view in group_list %}
+			<option value="{% url 'early:view' view %}">{{ view }}</option>
+		{% endfor %}
+	</select>
+	<br>
+	<br>
+
+{% endif %}
+
 
 <a href="{% url 'early:index' %}">Revisar otra vista ?</a>
