@@ -19,6 +19,11 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
+from django.template import loader
+
+
+
+
 
 from .models import Country, View
 
@@ -145,5 +150,40 @@ class ViewView(generic.DetailView):
         return context
 
 
+# def view(request, group):
+#     return HttpResponse("You're looking at group %s." % group)
+
 def view(request, group):
-    return HttpResponse("You're looking at group %s." % group)
+    # return HttpResponse("You're looking at group %s." % group)
+    template = loader.get_template('early/view.html')
+    # ------------------------------------------------------------
+    # group = self.kwargs['group']
+
+    # group = self.object.view_text
+    print("get_context_data: group[%s]" % (group))
+
+    conn = LV_Connect()
+    # print("get_context_data: conn[%s]" % (conn))
+
+    hosts_to_process = HostsGroup( conn, group )
+    # print( hosts_to_process )
+
+    hosts_list = []
+    Group = GroupState( group )
+
+    for hostname in hosts_to_process:
+        print( hostname )
+        Host = HostState( hostname )
+        Host.check_cpu( conn )
+        Host.check_disk( conn )
+        Host.check_memory( conn )
+        Host.check_alerts( conn )
+        hosts_list.append( Host )
+        Group.check_host_state( Host.state )
+
+    # ------------------------------------------------------------
+    context = {
+        'hosts': hosts_list,
+        'group': Group,
+    }
+    return HttpResponse(template.render(context, request))

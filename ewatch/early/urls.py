@@ -12,7 +12,7 @@ urlpatterns = [
 
     # ex: /early/view/2/
     # url(r'^view/(?P<pk>[0-9]+)/$', views.ViewView.as_view(), name='view'),
-    
+
     # ex: /early/view/CL_BACKUP/
     url(r'^view/(?P<group>\S+)/$', views.view, name='view'),
 
