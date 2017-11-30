@@ -39,6 +39,14 @@ class DetailView(generic.DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
         print("DetailView: pk[%s]" % (self.kwargs['pk']))
 
+        country_dict = {r'CHILE':r'CL_', r'ARGENTINA':r'AR_', r'PERU':r'PE_',
+                        r'COLOMBIA':r'CO_', r'BRASIL':r'BR_',}
+
+
+        # data = {'a':1,'b':2,'c':3}
+        # prefix_list = [ r'CL_', r'AR_', r'PE_', r'CO_', r'BR_', ]
+
+
         '''
         debo ir a buscar a la base de datos el objeto del modelo
         Country, para ver a que pais corresponde --> inferir el
@@ -53,7 +61,17 @@ class DetailView(generic.DetailView):
 
         _pk = self.kwargs['pk']
         c = Country.objects.get(pk=_pk)
-        print( c )
+        # print( c )
+        _country = c.country_text
+        print( _country )
+
+        if _country in country_dict:
+            _prefix = country_dict[ _country ]
+        else:
+            print("views.py: class DetailView: key[%s] no existe !!!" % (_country))
+            exit( 1 )
+
+        print( _prefix )
 
     # -------------------------------------------------------
 
