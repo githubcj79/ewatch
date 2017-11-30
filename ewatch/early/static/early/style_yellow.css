@@ -1,7 +1,9 @@
-/*li a {
-    color: green;
-}*/
 
-body {
-    background: white url("images/yellow.png") no-repeat left top;
+.background-image {
+  background: #ffffcc url("images/yellow.png") 20px 50% no-repeat;
+  border: 2px solid #b3b300;
+  border-radius: 5px;
+  color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 15px 20px 15px 50px;
 }
