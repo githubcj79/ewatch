@@ -270,3 +270,15 @@ BR-CARTAO                                   BR_CARTAO
 BR-EMPORIUM                                 BR_EMPORIUM
 BR-NOTA_FISCAL                              BR_NOTA_FISCAL
 BR-SITEF                                    BR_SITEF
+
+# -----------------------------------------------------------------------------
+
+20171130
+
+Estoy en ~/Projects/ewatch/ewatch/early/views.py ...
+
+Idea:
+
+    en template detail.html, mostrar set de grupos asociados a pais, con <a rel > asociado a
+    algo como ../group, de forma de en urlconfig detectar el grupo, vía expresion regular
+    y capturarlo para luego, mostrar info habitual de hosts constituyentes

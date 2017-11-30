@@ -33,10 +33,10 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Country
     template_name = 'early/detail.html'
-    # -------------------------------------------------------
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
+        # -------------------------------------------------------
         print("DetailView: pk[%s]" % (self.kwargs['pk']))
 
         country_dict = {r'CHILE':r'CL_', r'ARGENTINA':r'AR_', r'PERU':r'PE_',
@@ -72,18 +72,30 @@ class DetailView(generic.DetailView):
             exit( 1 )
         print( _prefix )
 
-        # Se obtiene el diccionario de grupos
-
         conn = LV_Connect()
 
+        # Se obtiene el diccionario de grupos
         groups_dict = GroupsDictionary( conn )
+
+        # Se obtiene el set de grupos asociado al prefijo del pais.
         if _prefix in groups_dict:
             group_set = groups_dict[ _prefix ]
         else:
             print("views.py: class DetailView: key[%s] no existe en groups_dict !!!" % (_prefix))
             exit( 1 )
         print( group_set )
-    # -------------------------------------------------------
+
+        # -------------------------------------------------------
+        context['country_text'] = _country
+        # -------------------------------------------------------
+        '''
+        OJO: Debería convertir set en lista y ordenarla y pasar a template la lista ...
+        '''
+        context['group_set'] = group_set
+        # -------------------------------------------------------
+        return context
+
+
 
 class ResultsView(generic.DetailView):
     model = Country

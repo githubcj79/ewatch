@@ -1,8 +1,9 @@
-<h1>{{ country.country_text }}</h1>
+<h1>{{ country_text }}</h1>
 
 <ul>
-{% for view in country.view_set.all %}
-    <li><a href="{% url 'early:view' view.id %}">{{ view.view_text }}</a></li>
+{% for view in group_set %}
+    {# <li><a href="{% url 'early:view' view %}">{{ view }}</a></li> #}
+    <li>{{ view }}</li>
 {% endfor %}
 </ul>
 
