@@ -1,6 +1,5 @@
-# Initial
+# -*- coding: iso-8859-15 -*-
 
-#-*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from __future__ import print_function
 
@@ -34,6 +33,13 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Country
     template_name = 'early/detail.html'
+    # -------------------------------------------------------
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(DetailView, self).get_context_data(**kwargs)
+    #     print("DetailView: pk[%s]" % (self.kwargs['pk']))
+
+    # -------------------------------------------------------
 
 class ResultsView(generic.DetailView):
     model = Country
