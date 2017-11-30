@@ -35,9 +35,25 @@ class DetailView(generic.DetailView):
     template_name = 'early/detail.html'
     # -------------------------------------------------------
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(DetailView, self).get_context_data(**kwargs)
-    #     print("DetailView: pk[%s]" % (self.kwargs['pk']))
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        print("DetailView: pk[%s]" % (self.kwargs['pk']))
+
+        '''
+        debo ir a buscar a la base de datos el objeto del modelo
+        Country, para ver a que pais corresponde --> inferir el
+        prefijo Ej: CL_
+
+        Con eso puedo ir a buscar el diccionario de grupos
+        y usando key == prefijo, obtener el set de grupos 
+        asociados.
+
+        Pregunta: vale la pena definir un "objeto" que almacene esta info ?
+        '''
+
+        _pk = self.kwargs['pk']
+        c = Country.objects.get(pk=_pk)
+        print( c )
 
     # -------------------------------------------------------
 
