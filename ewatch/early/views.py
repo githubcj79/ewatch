@@ -10,7 +10,7 @@ from django.shortcuts import render
 
 # from utils.testing import a_function
 from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
-from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts
+from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts, GroupsDictionary
 from utils.state_class import HostState, GroupState
 
 # FROM REPORT
@@ -43,10 +43,6 @@ class DetailView(generic.DetailView):
                         r'COLOMBIA':r'CO_', r'BRASIL':r'BR_',}
 
 
-        # data = {'a':1,'b':2,'c':3}
-        # prefix_list = [ r'CL_', r'AR_', r'PE_', r'CO_', r'BR_', ]
-
-
         '''
         debo ir a buscar a la base de datos el objeto del modelo
         Country, para ver a que pais corresponde --> inferir el
@@ -59,20 +55,34 @@ class DetailView(generic.DetailView):
         Pregunta: vale la pena definir un "objeto" que almacene esta info ?
         '''
 
+        # Se va a buscar a la base de datos el objeto del modelo
+        # Country, asociado a la pk recibida.
+
         _pk = self.kwargs['pk']
         c = Country.objects.get(pk=_pk)
-        # print( c )
         _country = c.country_text
         print( _country )
+
+        # Se obtiene el prefijo asociado al pais.
 
         if _country in country_dict:
             _prefix = country_dict[ _country ]
         else:
-            print("views.py: class DetailView: key[%s] no existe !!!" % (_country))
+            print("views.py: class DetailView: key[%s] no existe en country_dict !!!" % (_country))
             exit( 1 )
-
         print( _prefix )
 
+        # Se obtiene el diccionario de grupos
+
+        conn = LV_Connect()
+
+        groups_dict = GroupsDictionary( conn )
+        if _prefix in groups_dict:
+            group_set = groups_dict[ _prefix ]
+        else:
+            print("views.py: class DetailView: key[%s] no existe en groups_dict !!!" % (_prefix))
+            exit( 1 )
+        print( group_set )
     # -------------------------------------------------------
 
 class ResultsView(generic.DetailView):
