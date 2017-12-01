@@ -291,3 +291,15 @@ Temas abiertos:
 - Agregar los paises restantes a la b.d FIXED
 
 - Cambiar despliegue por lista ...  FIXED
+
+# -----------------------------------------------------------------------------
+
+20171130
+
+César:
+
+    - agregar, ícono o color a alertas
+    - según lo q hallé el otro día
+        --> pais --> ip para consulta
+                    (en el caso de chile hay que ir a 2 ip, "sumar" grupos y recordar ip asociado al grupo)
+    - mirar maqueta ... para allá va la cosa
