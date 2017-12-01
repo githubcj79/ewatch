@@ -121,7 +121,7 @@ def view(request, group):
     # print( hosts_to_process )
 
     hosts_list = []
-    Group = GroupState( group )
+    group_state = GroupState( group )
 
     for hostname in hosts_to_process:
         print( hostname )
@@ -131,11 +131,11 @@ def view(request, group):
         Host.check_memory( conn )
         Host.check_alerts( conn )
         hosts_list.append( Host )
-        Group.check_host_state( Host.state )
+        group_state.check_host_state( Host.state )
 
     # ------------------------------------------------------------
     context = {
         'hosts': hosts_list,
-        'group': Group,
+        'group': group_state,
     }
     return HttpResponse(template.render(context, request))
