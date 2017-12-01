@@ -299,6 +299,8 @@ Temas abiertos:
 César:
 
     - agregar, ícono o color a alertas
+        Idea: template tag color = f(alert)
+        
     - según lo q hallé el otro día
         --> pais --> ip para consulta
                     (en el caso de chile hay que ir a 2 ip, "sumar" grupos y recordar ip asociado al grupo)

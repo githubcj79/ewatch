@@ -13,7 +13,7 @@
 </div>
 
 {% block content %}
-{% load poll_extras %}
+{% load early_extras %}
 
 <ul>
 {% for host in hosts %}
@@ -29,7 +29,7 @@
 		<table border="1" alerts="Alertas">
 			<tr><th>ALERTAS</th>
 				{% for alert in host.alerts %}
-					<tr><td style="font-size:10px;">{{ alert }}</td></tr>
+					<tr><td bgcolor={{ alert|alert_color }} style="font-size:10px;">{{ alert }}</td></tr>
 				{% endfor %}
 		</table>
 
