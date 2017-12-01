@@ -299,7 +299,7 @@ Temas abiertos:
 César:
 
     - agregar, ícono o color a alertas
-        Idea: template tag color = f(alert)
+        Idea: template tag color = f(alert)     FIXED
         
     - según lo q hallé el otro día
         --> pais --> ip para consulta
