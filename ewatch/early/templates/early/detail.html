@@ -3,6 +3,9 @@
 {% if group_list %}
 
 	<select size="1" name="links" onchange="window.location.href=this.value;">
+
+		<option selected disabled>ESCOJA UNA OPCION</option>
+
 		{% for view in group_list %}
 			<option value="{% url 'early:view' view.groupname %}">{{ view.groupname }}</option>
 		{% endfor %}
