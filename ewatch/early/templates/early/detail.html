@@ -4,7 +4,7 @@
 
 	<select size="1" name="links" onchange="window.location.href=this.value;">
 		{% for view in group_list %}
-			<option value="{% url 'early:view' view %}">{{ view }}</option>
+			<option value="{% url 'early:view' view.groupname %}">{{ view.groupname }}</option>
 		{% endfor %}
 	</select>
 	<br>

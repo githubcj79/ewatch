@@ -17,6 +17,23 @@ cmk_livestatus_tcp_port = livestatus_port
 
 DAYS_AGO = days_to_review
 
+def _LV_Connect( lv_server, lv_server_port ):
+
+	try:
+		# Creamos el socket
+	    socket_path = "tcp:%s:%s" % (lv_server,lv_server_port)
+	except Exception, e:
+		print "Livestatus error: %s" % str(e)
+		sys.exit(1)
+
+	try:
+	    # Creamos la conexión con MK Livestatus usando el socket
+		return livestatus.SingleSiteConnection(socket_path)
+	except Exception, e: # livestatus.MKLivestatusException, e:
+		print "Livestatus error: %s" % str(e)
+		exit (2)
+
+
 def LV_Connect():
 
 	try:
@@ -86,7 +103,7 @@ def GroupsSet( conn ):
 
 	return group_set
 
-def CountryOfGroup( group ):
+def PrefixOfGroup( group ):
 	'''
 	Retorna el prefijo del pais del grupo.
 	Si no tiene un prefijo conocido, retorna None.
@@ -121,7 +138,7 @@ def GroupsDictionary( conn ):
 		if search:
 			group = search.groups()[0]
 			# print( group )
-			country = CountryOfGroup( group )
+			country = PrefixOfGroup( group )
 			if country:
 				if country in group_dict:
 					key_set = group_dict[ country ]

@@ -10,8 +10,11 @@ from django.shortcuts import render
 
 # from utils.testing import a_function
 from utils.group_services import group_services, show_group_services_data, show_cpu_load, show_disk, show_memory
-from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts, GroupsDictionary
+from utils.live_utils import  HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts
+# from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts, GroupsDictionary
 from utils.state_class import HostState, GroupState
+from utils.connection_class import Connection, ShowSetAsOrderedList
+
 
 # FROM REPORT
 
@@ -74,10 +77,12 @@ class DetailView(generic.DetailView):
             # exit( 1 )
         print( _prefix )
 
-        conn = LV_Connect()
+        # conn = LV_Connect()
+        connection = Connection() # It takes a 0m1.338s, to load it.
+        groups_dict = connection.groups_dict
 
         # Se obtiene el diccionario de grupos
-        groups_dict = GroupsDictionary( conn )
+        # groups_dict = GroupsDictionary( conn )
 
         # Se obtiene el set de grupos asociado al prefijo del pais.
         if _prefix in groups_dict:
@@ -86,7 +91,7 @@ class DetailView(generic.DetailView):
             print("views.py: class DetailView: key[%s] no existe en groups_dict !!!" % (_prefix))
             group_set = set()
             # exit( 1 )
-        print( group_set )
+        # ShowSetAsOrderedList( group_set )
 
         # -------------------------------------------------------
         context['country_text'] = _country
@@ -114,22 +119,28 @@ def view(request, group):
     # group = self.object.view_text
     print("get_context_data: group[%s]" % (group))
 
-    conn = LV_Connect()
+    connection = Connection() # It takes a 0m1.338s, to load it.
+    # conn = LV_Connect()
     # print("get_context_data: conn[%s]" % (conn))
 
-    hosts_to_process = HostsGroup( conn, group )
+    #
+    #   Debería buscar el Group, en el diccionario, para usarlo en la invocación a HostsGroup()
+    #   --> sugiere una rutina en connection_class.py
+    group_obj = connection.GetGroup( group )
+
+    hosts_to_process = HostsGroup( group_obj.conn, group_obj.groupname )
     # print( hosts_to_process )
 
     hosts_list = []
-    group_state = GroupState( group )
+    group_state = GroupState( group_obj.groupname )
 
     for hostname in hosts_to_process:
         print( hostname )
         Host = HostState( hostname )
-        Host.check_cpu( conn )
-        Host.check_disk( conn )
-        Host.check_memory( conn )
-        Host.check_alerts( conn )
+        Host.check_cpu( group_obj.conn )
+        Host.check_disk( group_obj.conn )
+        Host.check_memory( group_obj.conn )
+        Host.check_alerts( group_obj.conn )
         hosts_list.append( Host )
         group_state.check_host_state( Host.state )
 
