@@ -1,9 +1,31 @@
-{% if country_list %}
-    <ul>
-    {% for country in country_list %}
-        <li><a href="{% url 'early:detail' country.id %}">{{ country.country_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No countries are available.</p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Reporte Sanidad</title>
+
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'early/style.css' %}" />
+		
+	</head>
+	<body>
+
+		<h1>INFORME DE ESTADO DE SALUD PLATAFORMA</h1>
+
+		<section class="container">
+
+			{% if country_list %}
+			    <ul>
+			    {% for country in country_list %}
+			        <li><a href="{% url 'early:detail' country.id %}">{{ country.country_text }}</a></li>
+			    {% endfor %}
+			    </ul>
+			{% else %}
+			    <p>No countries are available.</p>
+			{% endif %}
+
+		</section>
+
+
+	</body>
+</html>

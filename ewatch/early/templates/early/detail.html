@@ -1,19 +1,39 @@
-<h1>{{ country_text }}</h1>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Reporte Sanidad</title>
 
-{% if group_list %}
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'early/style.css' %}" />
+		
+	</head>
+	<body>
 
-	<select size="1" name="links" onchange="window.location.href=this.value;">
+		<h1>INFORME DE ESTADO DE SALUD PLATAFORMA</h1>
 
-		<option selected disabled>ESCOJA UNA OPCION</option>
+		<section class="container">
 
-		{% for view in group_list %}
-			<option value="{% url 'early:view' view.groupname %}">{{ view.groupname }}</option>
-		{% endfor %}
-	</select>
-	<br>
-	<br>
+			<h1>{{ country_text }}</h1>
 
-{% endif %}
+			{% if group_list %}
 
+				<select size="1" name="links" onchange="window.location.href=this.value;">
 
-<a href="{% url 'early:index' %}">Revisar otra vista ?</a>
+					<option selected disabled>ESCOJA UNA OPCION</option>
+
+					{% for view in group_list %}
+						<option value="{% url 'early:view' view.groupname %}">{{ view.groupname }}</option>
+					{% endfor %}
+				</select>
+				<br>
+				<br>
+
+			{% endif %}
+
+			<a href="{% url 'early:index' %}">Revisar otra vista ?</a>
+
+		</section>
+
+	</body>
+</html>
