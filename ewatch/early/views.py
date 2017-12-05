@@ -40,24 +40,11 @@ class DetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
-        # -------------------------------------------------------
+
         print("DetailView: pk[%s]" % (self.kwargs['pk']))
 
         country_dict = {r'CHILE':r'CL_', r'ARGENTINA':r'AR_', r'PERU':r'PE_',
                         r'COLOMBIA':r'CO_', r'BRASIL':r'BR_',}
-
-
-        '''
-        debo ir a buscar a la base de datos el objeto del modelo
-        Country, para ver a que pais corresponde --> inferir el
-        prefijo Ej: CL_
-
-        Con eso puedo ir a buscar el diccionario de grupos
-        y usando key == prefijo, obtener el set de grupos 
-        asociados.
-
-        Pregunta: vale la pena definir un "objeto" que almacene esta info ?
-        '''
 
         # Se va a buscar a la base de datos el objeto del modelo
         # Country, asociado a la pk recibida.
@@ -74,10 +61,8 @@ class DetailView(generic.DetailView):
         else:
             print("views.py: class DetailView: key[%s] no existe en country_dict !!!" % (_country))
             _prefix = None
-            # exit( 1 )
         print( _prefix )
 
-        # conn = LV_Connect()
         connection = Connection() # It takes a 0m1.338s, to load it.
         groups_dict = connection.groups_dict
 
@@ -90,17 +75,13 @@ class DetailView(generic.DetailView):
         else:
             print("views.py: class DetailView: key[%s] no existe en groups_dict !!!" % (_prefix))
             group_set = set()
-            # exit( 1 )
         # ShowSetAsOrderedList( group_set )
 
-        # -------------------------------------------------------
         context['country_text'] = _country
-        # -------------------------------------------------------
-        '''
-        OJO: Debería convertir set en lista y ordenarla y pasar a template la lista ...
-        '''
+
+        # OJO: Debería convertir set en lista y ordenarla y pasar a template la lista ...
         context['group_list'] = sorted(list(group_set))
-        # -------------------------------------------------------
+
         return context
 
 
