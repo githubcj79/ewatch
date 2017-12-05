@@ -4,59 +4,63 @@
 		<meta charset="utf-8">
 		<title>Reporte Sanidad</title>
 
-		{# {% load static %} #}
-		{# <link rel="stylesheet" type="text/css" href="{% static 'early/style.css' %}" /> #}
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'early/style.css' %}" />
 		
 	</head>
 	<body>
 
 		<h1>INFORME DE ESTADO DE SALUD PLATAFORMA</h1>
 
-		{% load static %}
+		<section class="container">
 
-		{% if group.color == 'green' %}
-			<link rel="stylesheet" type="text/css" href="{% static 'early/style_green.css' %}" />
-		{% elif group.color == 'red' %}
-			<link rel="stylesheet" type="text/css" href="{% static 'early/style_red.css' %}" />
-		{% else %}
-			<link rel="stylesheet" type="text/css" href="{% static 'early/style_yellow.css' %}" />
-		{% endif %}
+			{% load static %}
 
-		<div class="background-image">
-			<h1 style="color: {{ group.color }};margin-left: 2em;">{{ group.groupname }}</h1>
-		</div>
-
-		{% block content %}
-		{% load early_extras %}
-
-		<ul>
-		{% for host in hosts %}
-		    <li><strong><font color={{ host.color }}>{{ host.hostname }}</font></strong></li>
-				<p>
-					{{ host.cpu }}<br>
-					{{ host.disk }}<br>
-					{{ host.memory }}
-				</p>
-
-			{% if host.alerts %}
-
-				<table border="1" alerts="Alertas">
-					<tr><th>ALERTAS</th>
-						{% for alert in host.alerts %}
-							<tr><td bgcolor={{ alert|alert_color }} style="font-size:10px;">{{ alert }}</td></tr>
-						{% endfor %}
-				</table>
-
-				<br>
-
+			{% if group.color == 'green' %}
+				<link rel="stylesheet" type="text/css" href="{% static 'early/style_green.css' %}" />
+			{% elif group.color == 'red' %}
+				<link rel="stylesheet" type="text/css" href="{% static 'early/style_red.css' %}" />
+			{% else %}
+				<link rel="stylesheet" type="text/css" href="{% static 'early/style_yellow.css' %}" />
 			{% endif %}
 
+			<div class="background-image">
+				<h1 style="color: {{ group.color }};margin-left: 2em;">{{ group.groupname }}</h1>
+			</div>
 
-		{% endfor %}
-		</ul>
-		{% endblock %}
+			{% block content %}
+			{% load early_extras %}
 
-		<a href="{% url 'early:index' %}">Revisar otra vista ?</a>
+			<ul>
+			{% for host in hosts %}
+			    <li><strong><font color={{ host.color }}>{{ host.hostname }}</font></strong></li>
+					<p>
+						{{ host.cpu }}<br>
+						{{ host.disk }}<br>
+						{{ host.memory }}
+					</p>
+
+				{% if host.alerts %}
+
+					<table border="1" alerts="Alertas">
+						<tr><th>ALERTAS</th>
+							{% for alert in host.alerts %}
+								<tr><td bgcolor={{ alert|alert_color }} style="font-size:10px;">{{ alert }}</td></tr>
+							{% endfor %}
+					</table>
+
+					<br>
+
+				{% endif %}
+
+
+			{% endfor %}
+			</ul>
+			{% endblock %}
+
+			<a href="{% url 'early:index' %}">Revisar otra vista ?</a>
+
+		</section>
 
 	</body>
 </html>
