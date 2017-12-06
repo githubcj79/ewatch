@@ -1,25 +1,7 @@
-
-/*.background-image {
-  background: #67b11c url("images/green.png") 20px 50% no-repeat;
-  border: 2px solid #467813;
-  border-radius: 5px;
-  color: #fff;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  padding: 30px 30px 30px 30px;
-  width: 960px;
-  margin: 10px 10px 10px 10px ;
-}
-*/
 .container {
-	/*margin: 0 auto;*/
 	margin: 0 ;
-/*	padding-left: 30px;
-	padding-right: 30px; */
-	/*padding: 40px 0 22px 0;*/
 	padding: 0 20px 20px 20px;
 	width: 960px;
-    /*width: 300px;*/
-
 }
 
 .aside-left {
@@ -31,33 +13,15 @@
   float: right;
   width: 450px;
   margin: 0px 0px 0px 10px ;
+
+  font-size: 14px;
 }
-
-
-/*div {
-  float: left;
-  width: 600px;
-}*/
-
 
 section {
   float: left;
 }
 
-/*aside {
-  float: right;
+body {
+	padding: 0 20px 20px 20px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-
-aside {
-  float: right;
-  margin: 0 1.5%;
-  width: 30%;
-}*/
-
-/*div {
-  border: 6px solid #949599;
-  height: 100px;
-  margin: 20px;
-  padding: 20px;
-  width: 400px;
-}*/

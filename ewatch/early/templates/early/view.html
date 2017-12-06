@@ -23,9 +23,7 @@
 
 		<section class="container">
 
-			{#<div class="aside-left">#}
-				<h1 style="color: #4AC1E8">Resumen General</h1>
-			{#</div>#}
+			<h1 style="color: #4AC1E8">Resumen General</h1>
 
 			<section>
 
@@ -50,7 +48,7 @@
 			<ul>
 			{% for host in hosts %}
 			    <li><strong><font color={{ host.color }}>{{ host.hostname }}</font></strong></li>
-					<p>
+					<p style="font-size:15px;">
 						{{ host.cpu }}<br>
 						{{ host.disk }}<br>
 						{{ host.memory }}
