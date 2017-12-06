@@ -6,8 +6,6 @@ register = template.Library()
 def lookup(d, key):
     return d[key]
 
-# ----------------------------
-
 @register.filter
 def alert_color( str_alert ):
 
@@ -18,3 +16,12 @@ def alert_color( str_alert ):
 	else:
 		return '#C6E0C5'
 
+@register.filter
+def text_color( str_alert ):
+
+	if 'CRITICAL' in str_alert:
+		return 'CRIT'
+	elif 'WARNING' in str_alert:
+		return 'WARN'
+	else:
+		return 'OK'
