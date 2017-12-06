@@ -57,7 +57,7 @@
 				{% if host.alerts %}
 
 					<table border="1" alerts="Alertas">
-						<tr><th>ALERTAS</th>
+						<tr><th style="font-size:10px;">ALERTAS</th>
 							{% for alert in host.alerts %}
 								<tr><td bgcolor={{ alert|alert_color }} style="font-size:10px;">{{ alert }}</td></tr>
 							{% endfor %}
