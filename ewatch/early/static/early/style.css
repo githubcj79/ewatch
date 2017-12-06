@@ -25,3 +25,55 @@ body {
 	padding: 0 20px 20px 20px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+.ok {
+  background: #5CBD73;
+}
+
+/*table {
+  border-collapse: separate;
+  border-spacing: 4px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #cecfd5;
+}
+
+th,
+td {
+  padding: 10px 15px;
+}
+
+thead {
+  background: #395870;
+  color: #fff;
+}*/
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+th,
+td {
+  font-size: 12px;
+
+  padding: 5px 15px;
+
+  /*padding: 10px 15px;*/
+}
+thead {
+  background: #395870;
+  color: #fff;
+}
+tbody tr:nth-child(even) {
+  background: #f0f0f2;
+}
+td {
+  border-bottom: 1px solid #cecfd5;
+  border-right: 1px solid #cecfd5;
+}
+td:first-child {
+  border-left: 1px solid #cecfd5;
+}

@@ -40,35 +40,56 @@
 
 			</section>
 
-			{% block content %}
 			{% load early_extras %}
-
-			{# limpiar float #}
-
+			{% block content %}
 			<ul>
-			{% for host in hosts %}
-			    <li><strong><font color={{ host.color }} size="4">{{ host.hostname }}</font></strong></li>
-					<p style="font-size:15px;">
-						{{ host.cpu }}<br>
-						{{ host.disk }}<br>
-						{{ host.memory }}
-					</p>
+				{% for host in hosts %}
 
-				{% if host.alerts %}
+				    <strong><font color={{ host.color }} size="4">{{ host.hostname }}</font></strong>
 
-					<table border="1" alerts="Alertas">
-						<tr><th style="font-size:10px;">ALERTAS</th>
-							{% for alert in host.alerts %}
-								<tr><td bgcolor={{ alert|alert_color }} style="font-size:10px;">{{ alert }}</td></tr>
-							{% endfor %}
+					<table>
+						<caption>Detalle de los recursos</caption>
+						<thead>
+							<tr>
+								<th scope="col">State</th>
+								<th scope="col">Service</th>
+								<th scope="col">Status detail</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="ok">OK</td>
+								<td>CPU utilization</td>
+								<td>{{ host.cpu }}</td>
+							</tr>
+							<tr>
+								<td class="ok">OK</td>
+								<td>Disk IO SUMMARY</td>
+								<td>{{ host.disk }}</td>
+							</tr>
+							<tr>
+								<td class="ok">OK</td>
+								<td>Memory</td>
+								<td>{{ host.memory }}</td>
+							</tr>
+						</tbody>
 					</table>
-
 					<br>
 
-				{% endif %}
+					{% if host.alerts %}
 
-			{% endfor %}
+						<table border="1" alerts="Alertas">
+							<tr><th style="font-size:10px;">ALERTAS</th>
+								{% for alert in host.alerts %}
+									<tr><td bgcolor={{ alert|alert_color }} style="font-size:10px;">{{ alert }}</td></tr>
+								{% endfor %}
+						</table>
 
+						<br>
+
+					{% endif %}
+
+				{% endfor %}
 			</ul>
 			{% endblock %}
 
