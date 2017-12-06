@@ -5,6 +5,15 @@
 		<title>Reporte Sanidad</title>
 
 		{% load static %}
+
+		{% if group.color == 'green' %}
+			<link rel="stylesheet" type="text/css" href="{% static 'early/style_green.css' %}" />
+		{% elif group.color == 'red' %}
+			<link rel="stylesheet" type="text/css" href="{% static 'early/style_red.css' %}" />
+		{% else %}
+			<link rel="stylesheet" type="text/css" href="{% static 'early/style_yellow.css' %}" />
+		{% endif %}
+
 		<link rel="stylesheet" type="text/css" href="{% static 'early/style.css' %}" />
 		
 	</head>
@@ -14,29 +23,29 @@
 
 		<section class="container">
 
+			{#<div class="aside-left">#}
+				<h1 style="color: #4AC1E8">Resumen General</h1>
+			{#</div>#}
 
-			<h1 style="color: #4AC1E8">Resumen General</h1>
+			<section>
 
+				<aside class="aside-left">
+					<div class="background-image">
+						<h1 style="color: {{ group.color }};margin-left: 4em;">{{ group.groupname }}</h1>
+					</div>
+				</aside>
 
+				<aside class="aside-right">
+					<p> {{ group.summary }} </p>
+					<strong><p> {{ group.action }} </p></strong>
+				</aside>
 
-
-
-			{% load static %}
-
-			{% if group.color == 'green' %}
-				<link rel="stylesheet" type="text/css" href="{% static 'early/style_green.css' %}" />
-			{% elif group.color == 'red' %}
-				<link rel="stylesheet" type="text/css" href="{% static 'early/style_red.css' %}" />
-			{% else %}
-				<link rel="stylesheet" type="text/css" href="{% static 'early/style_yellow.css' %}" />
-			{% endif %}
-
-			<div class="background-image">
-				<h1 style="color: {{ group.color }};margin-left: 2em;">{{ group.groupname }}</h1>
-			</div>
+			</section>
 
 			{% block content %}
 			{% load early_extras %}
+
+			{# limpiar float #}
 
 			<ul>
 			{% for host in hosts %}
@@ -60,8 +69,8 @@
 
 				{% endif %}
 
-
 			{% endfor %}
+
 			</ul>
 			{% endblock %}
 

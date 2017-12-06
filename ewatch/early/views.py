@@ -94,19 +94,12 @@ class ResultsView(generic.DetailView):
 def view(request, group):
     # return HttpResponse("You're looking at group %s." % group)
     template = loader.get_template('early/view.html')
-    # ------------------------------------------------------------
-    # group = self.kwargs['group']
 
-    # group = self.object.view_text
     print("get_context_data: group[%s]" % (group))
 
     connection = Connection() # It takes a 0m1.338s, to load it.
-    # conn = LV_Connect()
-    # print("get_context_data: conn[%s]" % (conn))
 
-    #
-    #   Debería buscar el Group, en el diccionario, para usarlo en la invocación a HostsGroup()
-    #   --> sugiere una rutina en connection_class.py
+    # Se busca Group en diccionario
     group_obj = connection.GetGroup( group )
 
     hosts_to_process = HostsGroup( group_obj.conn, group_obj.groupname )
@@ -125,7 +118,6 @@ def view(request, group):
         hosts_list.append( Host )
         group_state.check_host_state( Host.state )
 
-    # ------------------------------------------------------------
     context = {
         'hosts': hosts_list,
         'group': group_state,

@@ -5,33 +5,55 @@ from __future__ import print_function
 
 from early.utils.live_utils import ServiceStateHist, HostWarningAndCriticalAlerts
 
-# ---------------------------------------------------------
 class GroupState(object):
 	"""Almacena el estado de un grupo, en base al análisis de los estados de los hosts contituyentes."""
+
+	CRITICAL_summary = 'Esta sesion de analisis de salud, detecto problemas que podrian afectar su sistema.'
+	CRITICAL_action = 'Tome medidas correctivas tan pronto como sea posible.'
+	WARNING_summary = u'''Hemos revisado su sistema en busca de potenciales cuellos de botella en los
+						 discos, hemos descubierto que existe una posible degradacion de sus servicios
+						 a nivel de File System.'''
+	WARNING_action = 'Esto puede generar eventuales eventos de performance en su sistema, revise el detalle de este Warning.'
+	OK_summary = 'Hemos encontrado recomendaciones sobre la configuracion actual de los servicios en su sistema.'
+	OK_action = 'Tome medidas correctivas tan pronto como sea posible.'
 
 	def __init__(self, groupname):
 		super(GroupState, self).__init__()
 		self.groupname = groupname
 		self.state = 'OK'
 		self.color = 'green'
+		# ------------------------------------------------
+		self.summary = GroupState.OK_summary
+		self.action = GroupState.OK_action
+		# ------------------------------------------------
 
 	def check_host_state(self, host_state):
 		if self.state == 'CRITICAL':
 			self.color = 'red'
+			# ------------------------------------------------
+			self.summary = GroupState.CRITICAL_summary
+			self.action = GroupState.CRITICAL_action
+			# ------------------------------------------------
 			return
 
 		if  host_state == 'CRITICAL':
 			self.state = 'CRITICAL'
 			self.color = 'red'
+			# ------------------------------------------------
+			self.summary = GroupState.CRITICAL_summary
+			self.action = GroupState.CRITICAL_action
+			# ------------------------------------------------
 			return
 
 		if host_state == 'WARNING':
 			self.state = 'WARNING'
 			# self.color = 'yellow'
 			self.color = '#cccc00'
+			# ------------------------------------------------
+			self.summary = GroupState.WARNING_summary
+			self.action = GroupState.WARNING_action
+			# ------------------------------------------------
 			return
-
-# ---------------------------------------------------------
 
 
 class HostState(object):
