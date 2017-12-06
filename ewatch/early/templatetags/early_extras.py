@@ -12,9 +12,9 @@ def lookup(d, key):
 def alert_color( str_alert ):
 
 	if 'CRITICAL' in str_alert:
-		return 'red'
+		return '#F2D3D6'
 	elif 'WARNING' in str_alert:
-		return '#cccc00'
+		return '#F5F5E6'
 	else:
-		return 'green'
+		return '#C6E0C5'
 
