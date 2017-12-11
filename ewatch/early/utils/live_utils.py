@@ -9,11 +9,11 @@ import re
 from early.utils.date_time_utils import Seconds
 # from early.utils.raw_data import raw_table_lql
 
-from ewatch.settings import livestatus_host, livestatus_port, days_to_review
+from ewatch.settings import livestatus_host, livestatus_port, days_to_review, SECONDS_BEFORE
 
 
-cmk_livestatus_nagios_server = livestatus_host
-cmk_livestatus_tcp_port = livestatus_port
+# cmk_livestatus_nagios_server = livestatus_host
+# cmk_livestatus_tcp_port = livestatus_port
 
 DAYS_AGO = days_to_review
 
@@ -153,7 +153,8 @@ def GroupsDictionary( conn ):
 def HostWarningAndCriticalAlerts( conn, host ):
 	
 	seconds_now	=	Seconds( 0 )
-	seconds_before	=	Seconds( DAYS_AGO )
+	# seconds_before	=	Seconds( DAYS_AGO )
+	seconds_before	= seconds_now - SECONDS_BEFORE
 
 	lql = ("GET log\n" +
 		# "Columns: time type options state\n" +
@@ -170,7 +171,8 @@ def HostWarningAndCriticalAlerts( conn, host ):
 
 def ServiceStateHist( conn, host, service_description ):
 	seconds_now	=	Seconds( 0 )
-	seconds_before	=	Seconds( DAYS_AGO )
+	# seconds_before	=	Seconds( DAYS_AGO )
+	seconds_before	= seconds_now - SECONDS_BEFORE
 
 	lql = ("GET statehist\n" +
 		"Columns: host_name service_description\n" +
