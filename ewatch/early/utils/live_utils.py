@@ -154,7 +154,9 @@ def HostWarningAndCriticalAlerts( conn, host ):
 	
 	seconds_now	=	Seconds( 0 )
 	# print("HostWarningAndCriticalAlerts: seconds_now[%s]" % (seconds_now))
+
 	# seconds_before	=	Seconds( DAYS_AGO )
+
 	seconds_before	= seconds_now - SECONDS_BEFORE
 	# print("HostWarningAndCriticalAlerts: seconds_before[%s]" % (seconds_before))
 
@@ -174,9 +176,11 @@ def HostWarningAndCriticalAlerts( conn, host ):
 def ServiceStateHist( conn, host, service_description ):
 	seconds_now	=	Seconds( 0 )
 	# print("ServiceStateHist: seconds_now[%s]" % (seconds_now))
+
 	# seconds_before	=	Seconds( DAYS_AGO )
+
 	seconds_before	= seconds_now - SECONDS_BEFORE
-	# prin("ServiceStateHist: seconds_before[%s]" % (seconds_before))
+	# print("ServiceStateHist: seconds_before[%s]" % (seconds_before))
 
 	lql = ("GET statehist\n" +
 		"Columns: host_name service_description\n" +
