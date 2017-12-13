@@ -27,6 +27,10 @@ livestatus_port = 6557
 # days_to_review = 1
 days_to_review = 1 # para acelerar las pruebas
 
+MINUTES_AGO = 5
+SECONDS_BEFORE = MINUTES_AGO * 60
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
