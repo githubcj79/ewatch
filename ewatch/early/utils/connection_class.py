@@ -6,7 +6,7 @@ from __future__ import print_function
 
 import re
 
-from live_utils import _LV_Connect, LV_Execute
+from live_utils import _LV_Connect, LV_Execute, GroupInCountry
 
 class Connection(object):
 
@@ -42,8 +42,9 @@ class Connection(object):
 					search = compiled_pattern.search( a_dict[u'TAGS'] )
 					if search:
 						group_name = search.groups()[0]
-						host_name = sublist[ 1 ]
-						print("LoadDictionary: group_name[%s] host_name[%s]" % (group_name, host_name))
+						if GroupInCountry( group_name ):
+							host_name = sublist[ 1 ]
+							print("LoadDictionary: group_name[%s] host_name[%s]" % (group_name, host_name))
 			conn.disconnect()
 
 def main():
