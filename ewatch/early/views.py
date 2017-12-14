@@ -13,7 +13,7 @@ from utils.group_services import group_services, show_group_services_data, show_
 from utils.live_utils import  HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts
 # from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts, GroupsDictionary
 from utils.state_class import HostState, GroupState
-from utils.connection_class import Connection, ShowSetAsOrderedList
+from utils.connection_class import Connection#, ShowSetAsOrderedList
 
 
 # FROM REPORT
@@ -32,6 +32,11 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the list of countries."""
+        print("get_queryset: sacar esto !!!")
+        connection_obj = Connection()
+        return
+
+
         return Country.objects.order_by('country_text')
 
 class DetailView(generic.DetailView):
