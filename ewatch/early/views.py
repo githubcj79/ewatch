@@ -26,17 +26,13 @@ from django.template import loader
 
 from .models import Country, View
 
+connection = None
 
 class IndexView(generic.ListView):
     template_name = 'early/index.html'
 
     def get_queryset(self):
         """Return the list of countries."""
-        print("get_queryset: sacar esto !!!")
-        connection_obj = Connection()
-        return
-
-
         return Country.objects.order_by('country_text')
 
 class DetailView(generic.DetailView):
@@ -44,6 +40,7 @@ class DetailView(generic.DetailView):
     template_name = 'early/detail.html'
 
     def get_context_data(self, **kwargs):
+        global connection
         context = super(DetailView, self).get_context_data(**kwargs)
 
         print("DetailView: pk[%s]" % (self.kwargs['pk']))
@@ -69,8 +66,15 @@ class DetailView(generic.DetailView):
         print( _prefix )
 
         connection = Connection() # It takes a 0m1.338s, to load it.
-        groups_dict = connection.groups_dict
+        connection.show()
+        # groups_dict = connection.groups_dict OLD
 
+        groups_dict = connection.country_dict[_prefix].group_dict
+        group_set = set()
+        for groupname in groups_dict:
+            group_set.add( groupname )
+
+        ''' OLD
         # Se obtiene el diccionario de grupos
         # groups_dict = GroupsDictionary( conn )
 
@@ -81,6 +85,7 @@ class DetailView(generic.DetailView):
             print("views.py: class DetailView: key[%s] no existe en groups_dict !!!" % (_prefix))
             group_set = set()
         # ShowSetAsOrderedList( group_set )
+        '''
 
         context['country_text'] = _country
 
