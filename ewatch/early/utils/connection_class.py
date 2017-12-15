@@ -179,7 +179,7 @@ class Connection(object):
 		compiled_pattern = re.compile( pattern )
 
 		for lv_server in self.lv_server_ip_set:
-			print("LoadDictionary: lv_server[%s]" % (lv_server))
+			# print("LoadDictionary: lv_server[%s]" % (lv_server))
 
 			conn = _LV_Connect( lv_server, self.lv_server_port )
 			a_list = LV_Execute( conn, lql )
