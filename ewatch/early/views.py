@@ -13,7 +13,7 @@ from utils.group_services import group_services, show_group_services_data, show_
 from utils.live_utils import  HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts
 # from utils.live_utils import LV_Connect, HostsGroup, ServiceStateHist, HostWarningAndCriticalAlerts, GroupsDictionary
 from utils.state_class import HostState, GroupState
-from utils.connection_class import Connection, ShowSetAsOrderedList
+from utils.connection_class import Connection#, ShowSetAsOrderedList
 
 
 # FROM REPORT
@@ -26,6 +26,9 @@ from django.template import loader
 
 from .models import Country, View
 
+from operator import itemgetter, attrgetter
+
+country_prefix = None
 
 class IndexView(generic.ListView):
     template_name = 'early/index.html'
@@ -39,9 +42,10 @@ class DetailView(generic.DetailView):
     template_name = 'early/detail.html'
 
     def get_context_data(self, **kwargs):
+        global country_prefix
         context = super(DetailView, self).get_context_data(**kwargs)
 
-        print("DetailView: pk[%s]" % (self.kwargs['pk']))
+        # print("DetailView: pk[%s]" % (self.kwargs['pk']))
 
         country_dict = {r'CHILE':r'CL_', r'ARGENTINA':r'AR_', r'PERU':r'PE_',
                         r'COLOMBIA':r'CO_', r'BRASIL':r'BR_',}
@@ -52,38 +56,32 @@ class DetailView(generic.DetailView):
         _pk = self.kwargs['pk']
         c = Country.objects.get(pk=_pk)
         _country = c.country_text
-        print( _country )
+        # print( _country )
 
         # Se obtiene el prefijo asociado al pais.
 
         if _country in country_dict:
-            _prefix = country_dict[ _country ]
+            country_prefix = country_dict[ _country ]
         else:
             print("views.py: class DetailView: key[%s] no existe en country_dict !!!" % (_country))
-            _prefix = None
-        print( _prefix )
+            country_prefix = None
+        # print( country_prefix )
 
         connection = Connection() # It takes a 0m1.338s, to load it.
-        groups_dict = connection.groups_dict
+        # connection.show()
 
-        # Se obtiene el diccionario de grupos
-        # groups_dict = GroupsDictionary( conn )
-
-        # Se obtiene el set de grupos asociado al prefijo del pais.
-        if _prefix in groups_dict:
-            group_set = groups_dict[ _prefix ]
-        else:
-            print("views.py: class DetailView: key[%s] no existe en groups_dict !!!" % (_prefix))
-            group_set = set()
-        # ShowSetAsOrderedList( group_set )
+        group_set = set()
+        if country_prefix in connection.country_dict:
+            groups_dict = connection.country_dict[country_prefix].group_dict
+            for groupname in groups_dict:
+                group_set.add( groups_dict[groupname] )
 
         context['country_text'] = _country
 
         # OJO: Debería convertir set en lista y ordenarla y pasar a template la lista ...
-        context['group_list'] = sorted(list(group_set))
+        context['group_list'] = sorted(list(group_set), key=attrgetter('groupname'))
 
         return context
-
 
 
 class ResultsView(generic.DetailView):
@@ -92,6 +90,8 @@ class ResultsView(generic.DetailView):
 
 
 def view(request, group):
+    global country_prefix
+
     # return HttpResponse("You're looking at group %s." % group)
     template = loader.get_template('early/view.html')
 
@@ -99,27 +99,24 @@ def view(request, group):
 
     connection = Connection() # It takes a 0m1.338s, to load it.
 
-    # Se busca Group en diccionario
-    group_obj = connection.GetGroup( group )
-
-    hosts_to_process = HostsGroup( group_obj.conn, group_obj.groupname )
-    # print( hosts_to_process )
+    host_dict = connection.country_dict[country_prefix].group_dict[group].host_dict
 
     hosts_list = []
-    group_state = GroupState( group_obj.groupname )
-
-    for hostname in hosts_to_process:
-        print( hostname )
-        Host = HostState( hostname )
-        Host.check_cpu( group_obj.conn )
-        Host.check_disk( group_obj.conn )
-        Host.check_memory( group_obj.conn )
-        Host.check_alerts( group_obj.conn )
+    group_state = GroupState( group )
+    for hostname in host_dict:
+        print( host_dict[hostname].hostname )
+        Host = HostState( host_dict[hostname].hostname )
+        Host.check_cpu( host_dict[hostname].conn )
+        Host.check_disk( host_dict[hostname].conn )
+        Host.check_memory( host_dict[hostname].conn )
+        Host.check_alerts( host_dict[hostname].conn )
         hosts_list.append( Host )
-        group_state.check_host_state( Host.state )
+        group_state.check_host_state( Host.state )        
 
     context = {
-        'hosts': hosts_list,
+        # 'hosts': hosts_list,
+        'hosts': sorted(hosts_list, key=attrgetter('hostname')),
         'group': group_state,
     }
+
     return HttpResponse(template.render(context, request))
