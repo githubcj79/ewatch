@@ -194,6 +194,7 @@ class Connection(object):
 							host_name = sublist[ 1 ]
 							# print("LoadDictionary: group_name[%s] host_name[%s]" % (group_name, host_name))
 
+							''' Esta versión funciona correctamente también ...
 							if country_prefix not in self.country_dict:
 								self.country_dict[country_prefix] = Country( country_prefix )
 
@@ -202,8 +203,9 @@ class Connection(object):
 
 							if host_name not in self.country_dict[country_prefix].group_dict[group_name].host_dict:
 								self.country_dict[country_prefix].group_dict[group_name].host_dict[host_name] = Host( host_name, conn )
+							'''
 
-							'''if country_prefix in self.country_dict:
+							if country_prefix in self.country_dict:
 								country_obj = self.country_dict[country_prefix]
 							else:
 								country_obj = Country( country_prefix )
@@ -221,7 +223,7 @@ class Connection(object):
 
 							group_obj.host_dict[host_name] = host_obj
 							country_obj.group_dict[group_name] = group_obj
-							self.country_dict[country_prefix] = country_obj'''
+							self.country_dict[country_prefix] = country_obj
 
 			# conn.disconnect() # dado que lo guardé en el objeto Host
 

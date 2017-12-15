@@ -26,7 +26,10 @@ from django.template import loader
 
 from .models import Country, View
 
+from operator import itemgetter, attrgetter
+
 connection = None
+country_prefix = None
 
 class IndexView(generic.ListView):
     template_name = 'early/index.html'
@@ -40,7 +43,7 @@ class DetailView(generic.DetailView):
     template_name = 'early/detail.html'
 
     def get_context_data(self, **kwargs):
-        global connection
+        global connection, country_prefix
         context = super(DetailView, self).get_context_data(**kwargs)
 
         print("DetailView: pk[%s]" % (self.kwargs['pk']))
@@ -59,20 +62,20 @@ class DetailView(generic.DetailView):
         # Se obtiene el prefijo asociado al pais.
 
         if _country in country_dict:
-            _prefix = country_dict[ _country ]
+            country_prefix = country_dict[ _country ]
         else:
             print("views.py: class DetailView: key[%s] no existe en country_dict !!!" % (_country))
-            _prefix = None
-        print( _prefix )
+            country_prefix = None
+        print( country_prefix )
 
         connection = Connection() # It takes a 0m1.338s, to load it.
-        connection.show()
+        # connection.show()
         # groups_dict = connection.groups_dict OLD
 
-        groups_dict = connection.country_dict[_prefix].group_dict
+        groups_dict = connection.country_dict[country_prefix].group_dict
         group_set = set()
         for groupname in groups_dict:
-            group_set.add( groupname )
+            group_set.add( groups_dict[groupname] )
 
         ''' OLD
         # Se obtiene el diccionario de grupos
@@ -90,7 +93,7 @@ class DetailView(generic.DetailView):
         context['country_text'] = _country
 
         # OJO: Debería convertir set en lista y ordenarla y pasar a template la lista ...
-        context['group_list'] = sorted(list(group_set))
+        context['group_list'] = sorted(list(group_set), key=attrgetter('groupname'))
 
         return context
 
@@ -102,16 +105,33 @@ class ResultsView(generic.DetailView):
 
 
 def view(request, group):
+    global connection, country_prefix
+
     # return HttpResponse("You're looking at group %s." % group)
     template = loader.get_template('early/view.html')
 
     print("get_context_data: group[%s]" % (group))
 
-    connection = Connection() # It takes a 0m1.338s, to load it.
+    # connection = Connection() # It takes a 0m1.338s, to load it.
 
     # Se busca Group en diccionario
-    group_obj = connection.GetGroup( group )
+    # group_obj = connection.GetGroup( group )
+    host_dict = connection.country_dict[country_prefix].group_dict[group].host_dict
 
+    hosts_list = []
+    group_state = GroupState( group )
+    for hostname in host_dict:
+        print( host_dict[hostname].hostname )
+        Host = HostState( host_dict[hostname].hostname )
+        Host.check_cpu( host_dict[hostname].conn )
+        Host.check_disk( host_dict[hostname].conn )
+        Host.check_memory( host_dict[hostname].conn )
+        Host.check_alerts( host_dict[hostname].conn )
+        hosts_list.append( Host )
+        group_state.check_host_state( Host.state )        
+
+
+    ''' OLD
     hosts_to_process = HostsGroup( group_obj.conn, group_obj.groupname )
     # print( hosts_to_process )
 
@@ -127,9 +147,11 @@ def view(request, group):
         Host.check_alerts( group_obj.conn )
         hosts_list.append( Host )
         group_state.check_host_state( Host.state )
+    '''
 
     context = {
         'hosts': hosts_list,
         'group': group_state,
     }
+
     return HttpResponse(template.render(context, request))
