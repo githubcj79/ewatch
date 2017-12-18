@@ -8,14 +8,29 @@ from early.utils.live_utils import ServiceStateHist, HostWarningAndCriticalAlert
 class GroupState(object):
 	"""Almacena el estado de un grupo, en base al análisis de los estados de los hosts contituyentes."""
 
+	'''
 	CRITICAL_summary = 'Esta sesion de analisis de salud, detecto problemas que podrian afectar su sistema.'
 	CRITICAL_action = 'Tome medidas correctivas tan pronto como sea posible.'
-	WARNING_summary = u'''Hemos revisado su sistema en busca de potenciales cuellos de botella en los
+
+	WARNING_summary = u Hemos revisado su sistema en busca de potenciales cuellos de botella en los
 						 discos, hemos descubierto que existe una posible degradacion de sus servicios
-						 a nivel de File System.'''
+						 a nivel de File System.
 	WARNING_action = 'Esto puede generar eventuales eventos de performance en su sistema, revise el detalle de este Warning.'
+
 	OK_summary = 'Hemos encontrado recomendaciones sobre la configuracion actual de los servicios en su sistema.'
 	OK_action = 'Tome medidas correctivas tan pronto como sea posible.'
+	'''
+
+	CRITICAL_summary = 'Esta sesion de analisis de salud, detecto problemas que podrian afectar su sistema.'
+	CRITICAL_action = 'Tome medidas correctivas tan pronto como sea posible.'
+
+	WARNING_summary = u'''Hemos revisado su sistema en busca de potenciales eventos criticos proximos a ocurrir, 
+						hemos descubierto que existe una posible degradacion de sus servicios.'''
+	WARNING_action = 'Esto puede generar eventuales eventos de performance en su sistema, revise el detalle de este Warning.'
+
+	OK_summary = u'''Hemos revisado su sistema en busca de potenciales eventos, no encontrando afectacion 
+					actual a las componentes, el sistema trabaja con normalidad.'''
+	OK_action = ''
 
 	def __init__(self, groupname):
 		super(GroupState, self).__init__()
