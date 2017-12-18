@@ -27,7 +27,7 @@ livestatus_port = 6557
 # days_to_review = 1
 days_to_review = 1 # para acelerar las pruebas
 
-MINUTES_AGO = 5
+MINUTES_AGO = 15
 SECONDS_BEFORE = MINUTES_AGO * 60
 
 
