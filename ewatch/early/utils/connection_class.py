@@ -175,8 +175,22 @@ class Connection(object):
 		self.country_dict	= dict()
 
 		lql = "GET hostsbygroup\nColumns: custom_variables display_name"
-		pattern = r'^.*CAPA_LOGICA\s+(\S+)\D+.*$'
-		compiled_pattern = re.compile( pattern )
+
+		# pattern = r'^.*CAPA_LOGICA\s+(\S+)\D+.*$'
+		# compiled_pattern = re.compile( pattern )
+
+		# -------------------------------------------------------------------
+
+		pattern1 = r'^.*CAPA_LOGICA\s+(\S+)\D+.*$'
+		compiled_pattern1 = re.compile( pattern1 )
+
+		pattern2 = r'^.*\D+\s+(\S+)\s+CAPA_LOGICA.*$'
+		compiled_pattern2 = re.compile( pattern2 )
+
+		compiled_patterns = [compiled_pattern1, compiled_pattern2]
+
+
+		# -------------------------------------------------------------------
 
 		for lv_server in self.lv_server_ip_set:
 			# print("LoadDictionary: lv_server[%s]" % (lv_server))
@@ -186,44 +200,47 @@ class Connection(object):
 			for sublist in a_list:
 				a_dict = sublist[ 0 ]
 				if u'TAGS' in a_dict:
-					search = compiled_pattern.search( a_dict[u'TAGS'] )
-					if search:
-						group_name = search.groups()[0]
-						country_prefix = PrefixOfGroup( group_name )
-						if country_prefix:
-							host_name = sublist[ 1 ]
-							# print("LoadDictionary: group_name[%s] host_name[%s]" % (group_name, host_name))
+					# --------------------------------------------------------------------------------------
+					for compiled_pattern in compiled_patterns:
+						search = compiled_pattern.search( a_dict[u'TAGS'] )
+						if search:
+							group_name = search.groups()[0]
+							country_prefix = PrefixOfGroup( group_name )
+							if country_prefix:
+								host_name = sublist[ 1 ]
+								# print("LoadDictionary: group_name[%s] host_name[%s]" % (group_name, host_name))
 
-							''' Esta versión funciona correctamente también ...
-							if country_prefix not in self.country_dict:
-								self.country_dict[country_prefix] = Country( country_prefix )
+								''' Esta versión funciona correctamente también ...
+								if country_prefix not in self.country_dict:
+									self.country_dict[country_prefix] = Country( country_prefix )
 
-							if group_name not in self.country_dict[country_prefix].group_dict:
-								self.country_dict[country_prefix].group_dict[group_name] = Group( group_name )
+								if group_name not in self.country_dict[country_prefix].group_dict:
+									self.country_dict[country_prefix].group_dict[group_name] = Group( group_name )
 
-							if host_name not in self.country_dict[country_prefix].group_dict[group_name].host_dict:
-								self.country_dict[country_prefix].group_dict[group_name].host_dict[host_name] = Host( host_name, conn )
-							'''
+								if host_name not in self.country_dict[country_prefix].group_dict[group_name].host_dict:
+									self.country_dict[country_prefix].group_dict[group_name].host_dict[host_name] = Host( host_name, conn )
+								'''
 
-							if country_prefix in self.country_dict:
-								country_obj = self.country_dict[country_prefix]
-							else:
-								country_obj = Country( country_prefix )
+								if country_prefix in self.country_dict:
+									country_obj = self.country_dict[country_prefix]
+								else:
+									country_obj = Country( country_prefix )
 
-							if group_name in country_obj.group_dict:
-								group_obj = country_obj.group_dict[group_name]
-							else:
-								group_obj = Group( group_name )
+								if group_name in country_obj.group_dict:
+									group_obj = country_obj.group_dict[group_name]
+								else:
+									group_obj = Group( group_name )
 
-							if host_name in group_obj.host_dict:
-								host_obj = group_obj.host_dict[host_name]
-							else:
-								host_obj = Host( host_name, conn )
+								if host_name in group_obj.host_dict:
+									host_obj = group_obj.host_dict[host_name]
+								else:
+									host_obj = Host( host_name, conn )
 
 
-							group_obj.host_dict[host_name] = host_obj
-							country_obj.group_dict[group_name] = group_obj
-							self.country_dict[country_prefix] = country_obj
+								group_obj.host_dict[host_name] = host_obj
+								country_obj.group_dict[group_name] = group_obj
+								self.country_dict[country_prefix] = country_obj
+					# --------------------------------------------------------------------------------------
 
 			# conn.disconnect() # dado que lo guardé en el objeto Host
 
